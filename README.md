@@ -44,5 +44,4 @@ ER図 → https://drive.google.com/file/d/1winwact5fq_Y6JFDty1APMcoigbqM8kF/view
 - IDE：Cloud9
 ​
 ## 使用素材
-- アプリケーションの実装に使用したgem/bootstrapのリファレンスなどの記載は不要です。
 使用検討中です。
