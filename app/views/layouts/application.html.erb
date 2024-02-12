@@ -5,12 +5,67 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <script src="https://kit.fontawesome.com/cc96e0b592.js" crossorigin="anonymous"></script>
+    <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
+    <header class="shadow-sm">
+      <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+          <h2>LIFE</h2>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+              <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav ml-auto">
+                  
+                  <% if customer_signed_in? %>
+                  
+                  <%= link_to "マイページ", public_customers_mypage_path, class: 'nav-link text-dark' %>
+
+                  <%= link_to "投稿一覧", public_posts_path, class: 'nav-link text-dark' %>
+
+                  <%= link_to "募金ページ", public_donations_path, class: 'nav-link text-dark' %>
+
+                  <%= link_to "ログアウト", destroy_customer_session_path, method: :delete, class: 'nav-link text-dark' %>
+
+                <% elsif admin_signed_in? %>
+
+                  <%= link_to "投稿一覧", admin_posts_path, class: 'nav-link text-dark' %>
+
+                  <%= link_to "会員一覧", admin_customers_path, class: 'nav-link text-dark' %>
+
+                  <%= link_to "トップページ", top_path, class: 'nav-link text-dark' %>
+
+                  <%= link_to "ログアウト", destroy_admin_session_path, method: :delete, class: 'nav-link text-dark' %>
+
+                <% else %>
+
+                  <%= link_to "お知らせ", about_path, class: 'nav-link text-dark'%>
+
+                  <%= link_to "投稿一覧", public_posts_path, class: 'nav-link text-dark' %>
+
+                  <%= link_to "新規登録", new_customer_registration_path, class: 'nav-link text-dark' %>
+
+                  <%= link_to  "ログイン", new_customer_session_path, class: 'nav-link text-dark' %>
+
+                <% end %>
+              </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <%= flash[:notice] %>
     <%= yield %>
   </body>
+
+  <footer>
+    <div class="container mt-5">
+      <div class="row">
+        <div class="mx-auto">CopyRight Infratop.inc</div>
+      </div>
+    </div>
+  </footer>
 </html>
