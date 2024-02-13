@@ -39,6 +39,11 @@
   </div>
 
   <div class="field">
+    <%= f.label :自治体名 %><br>
+    <%= f.text_field :municipality_name, autofocus: true %>
+  </div>
+
+  <div class="field">
     <%= f.label :メールアドレス %><br />
     <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
   </div>
