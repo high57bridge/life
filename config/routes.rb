@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
 
-  # root to: "posts#index"
   get "admin/homes/top" => "admin/homes#top", as: "top"
 
   namespace :admin do
@@ -8,7 +7,8 @@ Rails.application.routes.draw do
     resources :customers, only: [:index, :show, :edit, :update]
     resources :donations, only: [:show]
   end
-
+  
+  root to: 'public/homes#top'
   get "public/homes/about" => "public/homes#about"
 
   namespace :public do
