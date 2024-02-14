@@ -20,10 +20,10 @@
             </button>
               <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav ml-auto">
-                  
+
                   <% if customer_signed_in? %>
-                  
-                  <%= link_to "マイページ", public_customers_mypage_path, class: 'nav-link text-dark' %>
+
+                  <%= link_to "マイページ", mypage_public_customers_path, class: 'nav-link text-dark' %>
 
                   <%= link_to "投稿一覧", public_posts_path, class: 'nav-link text-dark' %>
 

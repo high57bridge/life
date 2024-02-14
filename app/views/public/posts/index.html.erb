@@ -1,2 +1,10 @@
-<h1>Public::Posts#index</h1>
-<p>Find me in app/views/public/posts/index.html.erb</p>
+<h2>投稿一覧</h2>
+<table class="table">
+  <tr>
+    <td></td>
+  </tr>
+  <tr>
+    <td>更新日時</td>
+    <td><%= @posts.updated_at.strftime('%Y/%m/%d') %></td>
+  </tr>
+</table>
