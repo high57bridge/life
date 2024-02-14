@@ -7,23 +7,33 @@ Rails.application.routes.draw do
     resources :customers, only: [:index, :show, :edit, :update]
     resources :donations, only: [:show]
   end
-  
+
   root to: 'public/homes#top'
   get "public/homes/about" => "public/homes#about"
 
   namespace :public do
-    resources :posts, only: [:new, :index, :show]
+    resources :posts, only: [:new, :index, :show] do
+      resource :favorites, only: [:create, :destroy]
+      resources :comments
+    end
+
     resources :customers, only: :show
-    post 'favorite/:id' => 'favorites#create', as: 'create_favorite'
-    delete 'favorite/:id' => 'favorites#destroy', as: 'destroy_favorite'
-    get "customers/mypage" => "customers#show"
-    get "customers/information/edit" => "customers#edit"
-    patch "customers/information" => "customers#update"
-    get "customers/withdrawal" => "customers#withdrawal"
-    patch "customers/unsubscribe" => "customers#unsubscribe"
-    resources :donations, only: [:update, :index, :new, :create]
-    post "donations/confirm" => "donations#confirm"
-    get "donations/complete" => "donations#complete"
+
+    resource :customers do
+      get :mypage, action: :show
+      get "information/edit", action: :edit
+      patch :information, action: :update
+      get :withdrawal
+      patch :unsubscribe
+    end
+
+    resources :donations, only: [:update, :index, :new, :create] do
+      collection do
+        post :confirm
+        get :complete
+      end
+    end
+    
     resources :donation_details, only: [:index, :show]
   end
 
