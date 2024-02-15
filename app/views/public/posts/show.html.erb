@@ -1,2 +1,23 @@
-<h1>Public::Posts#show</h1>
-<p>Find me in app/views/public/posts/show.html.erb</p>
+<h2>お知らせ詳細画面</h2>
+
+    <%= @post.image %>
+    <%= @post.name %>
+    <%= @post.introduction %>
+    <%= @post.addrress %>
+    <%= @post.updated_at.strftime('%Y/%m/%d') %>
+    
+    <!--コメント表示-->
+    ユーザーネーム：<%= @post.customer.last_name %><%= @post.customer.first_name %>
+    コメント件数：<%= @post.comments.count %>
+    <% @post.comments.each do |comment| %>
+        <%= comment.created_at.strftime('%Y/%m/%d') %><%= comment.comment %>
+    <% end %>
+
+    <%= form_with model: [@post, @comment] do |f| %>
+        <%= f.text_area :comment, rows: '5', placeholder: "ここにコメントを入力してください" %>
+        <%= f.submit "投稿" %>
+        <%= link_to "削除", public_post_comment_path(f), method: :delete, "data-confirm" => "本当に削除しますか？" %>
+    <% end %>
+
+    
+    <%= link_to "戻る", public_posts_path %>
