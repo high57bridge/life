@@ -1,10 +1,16 @@
-<h2>投稿一覧</h2>
-<table class="table">
-  <tr>
-    <td></td>
-  </tr>
-  <tr>
-    <td>更新日時</td>
-    <td><%= @posts.updated_at.strftime('%Y/%m/%d') %></td>
-  </tr>
-</table>
+<h2>お知らせ一覧</h2>
+
+<h4><%= link_to "新着のお知らせ", new_public_post_path %></h4>
+  
+    <% @posts.each do |post| %>
+      <%= link_to public_post_path(post) do %>
+        <%= image_tag post.image %>
+      <% end %>
+    
+      <%= post.name %>
+      <%= post.introduction %>
+      <%= post.address %>
+      <%= post.updated_at.strftime('%Y/%m/%d') %>
+    <% end %>
+
+<%#= paginate @posts %>

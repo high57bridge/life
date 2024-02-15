@@ -12,9 +12,10 @@ Rails.application.routes.draw do
   get "public/homes/about" => "public/homes#about"
 
   namespace :public do
-    resources :posts, only: [:new, :index, :show] do
+      resources :posts, only: [:new, :index, :show] do
       resource :favorites, only: [:create, :destroy]
-      resources :comments
+      resources :comments, only: [:create, :destroy]
+      resource :tags, only: [:create, :destroy]
     end
 
     resources :customers, only: :show
@@ -33,11 +34,9 @@ Rails.application.routes.draw do
         get :complete
       end
     end
-    
+
     resources :donation_details, only: [:index, :show]
   end
-
-  post '/customers/guest_sign_in', to: 'customers/sessions#new_guest'
 
   devise_for :customer, skip: [:passwords], controllers: {
   registrations: "public/registrations",
@@ -47,5 +46,9 @@ Rails.application.routes.draw do
   devise_for :admin, skip: [:registrations, :passwords], controllers: {
   sessions: "admin/sessions"
 }
+devise_scope :customer do 
+  post '/customers/guest_sign_in', to: 'public/sessions#new_guest'
+end
+
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

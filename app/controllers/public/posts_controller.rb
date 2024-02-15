@@ -16,10 +16,13 @@ class Public::PostsController < ApplicationController
   end
 
   def index
+    # @posts = Post.page(params[:page])
     @posts = Post.all
+    @total_post = Post.count
   end
 
   def show
+    @post = Post.find(params[:id])
   end
 
   def new
