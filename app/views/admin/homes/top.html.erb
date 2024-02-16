@@ -1,2 +1,24 @@
-<h1>Admin::Homes#top</h1>
-<p>Find me in app/views/admin/homes/top.html.erb</p>
+<h2>会員からのご意見・ご質問一覧</h2>
+
+<%= @tops.each do |top| %>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>お名前</th>
+      <th>メールアドレス</th>
+      <th>ご意見・ご質問</th>
+      <th>受信日時</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><%= top.name %></td>
+      <td><%= top.email %></td>
+      <td><%= top.opinion %></td>
+      <td><%= top.created_at.strftime('%Y/%m/%d') %></td>
+    </tr>
+  </tbody>
+</table>
+
+<% end%>

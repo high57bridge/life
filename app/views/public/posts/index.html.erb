@@ -1,16 +1,31 @@
 <h2>お知らせ一覧</h2>
 
 <h4><%= link_to "新着のお知らせ", new_public_post_path %></h4>
-  
-    <% @posts.each do |post| %>
-      <%= link_to public_post_path(post) do %>
-        <%= image_tag post.image %>
-      <% end %>
-    
-      <%= post.name %>
-      <%= post.introduction %>
-      <%= post.address %>
-      <%= post.updated_at.strftime('%Y/%m/%d') %>
-    <% end %>
+  <% @posts.each do |post| %>
+  <table>
+    <thead>
+      <tr>
+        <th>避難場所の画像・地図</th>
+        <th>避難場所</th>
+        <th>避難場所に関しての説明</th>
+        <th>避難場所の住所</th>
+        <th>登録日時</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        <td>
+          <%= link_to public_post_path(post) do %>
+            <%= image_tag post.image %>
+          <% end %>
+        </td>
+        <td><%= post.name %></td>
+        <td><%= post.introduction %></td>
+        <td><%= post.address %></td>
+        <td><%= post.created_at.strftime('%Y/%m/%d') %></td>
+      </tr>
+    </tbody>
+  </table>
 
 <%#= paginate @posts %>

@@ -1,12 +1,31 @@
 <div class="container">
   <div class="text-center">
+    <h1>LIFEについて</h1>
     <h3>
-      ようこそ、LIFEへ！<br>
-      このサイトでは各自治体が出している災害時の<br>
-      避難情報をお知らせするサイトです。<br>
-      いいね♡を押すとブックマークとしても使用できます。<br>
-      <%= link_to "こちら", public_posts_path %>
-      から投稿にコメントもできます。<br>
+      LIFEは各自治体が出している災害時の避難情報や<br>
+      持ち物などをお知らせするサイトです。<br>
+      お子様からお年寄りまで見やすい<br>
+      サイト作りを心掛けております。<br>
+      サイトに関してご意見やご質問等ございましたら<br>
+      下記のフォームから送信をお願い致します。<br>
     </h3>
+
+    <%= form_with model: @about, url: complete_path do |f| %>
+    <table class="table">
+      <tr>
+        <td>お名前</td>
+        <td><%= f.text_field :name, autofocus: true %></td>
+      </tr>
+      <tr>
+        <td>メールアドレス</td>
+        <td><%= f.text_field :name, autofocus: true %></td>
+      </tr>
+      <tr>
+        <td>ご意見・ご質問フォーム</td>
+        <td><%= f.text_area :opinion, autofocus: true %></td>
+      </tr>
+    </table>
+    <%= f.submit "送信" %>
+    <% end %>
   </div>
 </div>

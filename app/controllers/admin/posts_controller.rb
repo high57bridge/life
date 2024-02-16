@@ -13,12 +13,30 @@ class Admin::PostsController < ApplicationController
     @comments = @post.comments # コメント一覧表示用
   end
 
+  def create
+    @post = Post.new(post_params)
+    if @post.save
+      flash[:notice]= "投稿に成功しました"
+      redirect_to admin_post_path(@post)
+    else
+      @posts = Post.all
+      render :new
+    end
+  end
+
   def edit
+    @post = Post.find(params[:id])
   end
 
   def update
   end
 
   def destroy
+  end
+
+  private
+
+  def post_params
+    params.require(:post).permit(:name, :introduction, :address, :image)
   end
 end

@@ -1,2 +1,19 @@
-<h1>Admin::Posts#edit</h1>
-<p>Find me in app/views/admin/posts/edit.html.erb</p>
+<h2>投稿の編集</h2>
+
+<%= form_with model: @post, url: admin_post_path do |f| %>
+<table>
+  <tr>
+    <th>避難場所の画像・地図</th>
+    <td><%= f.text_field :image, accept: "image*/" %></td>
+    <th>避難場所</th>
+    <td><%= f.text_field :name %></td>
+    <th>避難場所に関しての説明</th>
+    <td><%= f.text_area :introduction %></td>
+    <th>避難場所の住所</th>
+    <td><%= f.text_field :address %></td>
+  </tr>
+</table>
+
+<%- f.submit "更新" %>
+
+<% end %>

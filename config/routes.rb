@@ -3,13 +3,14 @@ Rails.application.routes.draw do
   get "admin/homes/top" => "admin/homes#top", as: "top"
 
   namespace :admin do
-    resources :posts, only: [:show, :index, :edit, :creat, :new, :update, :destroy]
+    resources :posts, only: [:show, :index, :edit, :create, :new, :update, :destroy]
     resources :customers, only: [:index, :show, :edit, :update]
     resources :donations, only: [:show]
   end
 
   root to: 'public/homes#top'
-  get "public/homes/about" => "public/homes#about"
+  get "/about" => "public/homes#about", as: "about"
+  post "/complete" => "public/homes#complete", as: "complete"
 
   namespace :public do
       resources :posts, only: [:new, :index, :show] do
@@ -18,13 +19,13 @@ Rails.application.routes.draw do
       resource :tags, only: [:create, :destroy]
     end
 
+    get "customers/withdrawal" => "customers#withdrawal"
     resources :customers, only: :show
 
     resource :customers do
       get :mypage, action: :show
       get "information/edit", action: :edit
       patch :information, action: :update
-      get :withdrawal
       patch :unsubscribe
     end
 
@@ -46,9 +47,8 @@ Rails.application.routes.draw do
   devise_for :admin, skip: [:registrations, :passwords], controllers: {
   sessions: "admin/sessions"
 }
-devise_scope :customer do 
+devise_scope :customer do
   post '/customers/guest_sign_in', to: 'public/sessions#new_guest'
 end
-
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
