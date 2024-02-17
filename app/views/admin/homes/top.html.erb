@@ -1,6 +1,6 @@
 <h2>会員からのご意見・ご質問一覧</h2>
 
-<%= @tops.each do |top| %>
+<% @homes.each do |home| %>
 
 <table class="table">
   <thead>
@@ -13,10 +13,10 @@
   </thead>
   <tbody>
     <tr>
-      <td><%= top.name %></td>
-      <td><%= top.email %></td>
-      <td><%= top.opinion %></td>
-      <td><%= top.created_at.strftime('%Y/%m/%d') %></td>
+      <td><%= home.name %></td>
+      <td><%= home.email %></td>
+      <td><%= home.opinion %></td>
+      <td><%= home.created_at.strftime('%Y/%m/%d') %></td>
     </tr>
   </tbody>
 </table>

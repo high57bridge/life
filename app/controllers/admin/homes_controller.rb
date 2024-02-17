@@ -1,7 +1,7 @@
 class Admin::HomesController < ApplicationController
 
   def top
-    @tops = Top.all
+    @homes = Home.all
   end
 
 end
