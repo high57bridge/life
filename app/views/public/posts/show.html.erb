@@ -8,24 +8,18 @@
             <th>避難場所に関しての説明</th>
             <td><%= @post.introduction %></td>
             <th>避難場所の住所</th>
-            <td><%= @post.addrress %></td>
+            <td><%= @post.address %></td>
             <th>登録日時</th>
             <td><%= @post.created_at.strftime('%Y/%m/%d') %></td>
         </tr>
     </table>
-    
+
     <!--コメント表示-->
-    ユーザーネーム：<%= @post.customer.last_name %><%= @post.customer.first_name %>
-    コメント件数：<%= @post.comments.count %>
+   コメント件数：<%= @post.comments.count %>
     <% @post.comments.each do |comment| %>
+        ユーザーネーム：<%= comment.customer.last_name %><%= comment.customer.first_name %>
         <%= comment.created_at.strftime('%Y/%m/%d') %><%= comment.comment %>
+        <%= link_to "削除", public_post_comment_path(@post, comment), method: :delete, "data-confirm" => "本当に削除しますか？" %>
     <% end %>
 
-    <%= form_with model: [@post, @comment] do |f| %>
-        <%= f.text_area :comment, rows: '5', placeholder: "ここにコメントを入力してください" %>
-        <%= f.submit "投稿" %>
-        <%= link_to "削除", public_post_comment_path(f), method: :delete, "data-confirm" => "本当に削除しますか？" %>
-    <% end %>
-
-    
     <%= link_to "戻る", public_posts_path %>
