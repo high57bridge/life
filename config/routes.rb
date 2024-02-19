@@ -10,21 +10,21 @@ Rails.application.routes.draw do
 
   root to: 'public/homes#top'
   get "/about" => "public/homes#about", as: "about"
-  post "/complete" => "public/homes#complete", as: "complete"
+  get "/complete" => "public/homes#complete", as: "complete"
 
   namespace :public do
-      resources :posts, only: [:new, :index, :show] do
-      resource :favorites, only: [:create, :destroy]
-      resources :comments, only: [:create, :destroy]
-      resource :tags, only: [:create, :destroy]
-    end
+    resources :homes, only: :create
+    resources :posts, only: [:new, :index, :show] do
+    resource :favorites, only: [:create, :destroy]
+    resources :comments, only: [:create, :destroy]
+    resource :tags, only: [:create, :destroy]
+  end
 
-    get "customers/withdrawal" => "customers#withdrawal"
     resources :customers, only: :show
-
     resource :customers do
       get :mypage, action: :show
       get "information/edit", action: :edit
+      get :withdrawal
       patch :information, action: :update
       patch :unsubscribe
     end
