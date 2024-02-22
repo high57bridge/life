@@ -2,7 +2,7 @@
 
 <h4><%= link_to "新着のお知らせ", new_public_post_path %></h4>
   <% @posts.each do |post| %>
-  <table>
+  <table class="table">
     <thead>
       <tr>
         <th>避難場所の画像・地図</th>
@@ -16,8 +16,10 @@
     <tbody>
       <tr>
         <td>
-          <%= link_to public_post_path(post) do %>
-            <%= image_tag post.image %>
+          <% if post.image.present? %>
+            <%= link_to public_post_path(post) do %>
+              <%= image_tag post.image, size: "100x100" %>
+            <% end %>
           <% end %>
         </td>
         <td><%= post.name %></td>

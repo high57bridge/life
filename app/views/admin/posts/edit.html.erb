@@ -3,17 +3,19 @@
 <%= form_with model: @post, url: admin_post_path do |f| %>
 <table>
   <tr>
-    <th>避難場所の画像・地図</th>
-    <td><%= f.text_field :image, accept: "image*/" %></td>
     <th>避難場所</th>
     <td><%= f.text_field :name %></td>
+  </tr>
+  <tr>
     <th>避難場所に関しての説明</th>
     <td><%= f.text_area :introduction %></td>
+  </tr>
+  <tr>
     <th>避難場所の住所</th>
     <td><%= f.text_field :address %></td>
   </tr>
 </table>
 
-<%- f.submit "更新" %>
+<%= f.submit "更新" %>
 
 <% end %>

@@ -29,9 +29,21 @@ class Admin::PostsController < ApplicationController
   end
 
   def update
+       @post = Post.find(params[:id])
+    if @post.update(post_params)
+       redirect_to admin_post_path
+    else
+      render :edit
+    end
   end
 
   def destroy
+       @post = Post.find(params[:id])
+    if @post.destroy
+       redirect_to admin_posts_path
+    else
+       render :show
+    end
   end
 
   private
