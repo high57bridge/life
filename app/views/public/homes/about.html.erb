@@ -21,8 +21,13 @@
         <td><%= f.text_field :email, autofocus: true %></td>
       </tr>
       <tr>
-        <td>ご意見・ご質問</td>
+        <td>ご意見・ご質問内容</td>
         <td><%= f.text_area :opinion, autofocus: true %></td>
+      </tr>
+      <tr>
+        <td>
+          <%= f.radio_button :is_active, true %>
+        </td>
       </tr>
     </table>
     <%= f.submit "送信" %>

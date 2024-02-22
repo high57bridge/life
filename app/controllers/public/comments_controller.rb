@@ -1,8 +1,8 @@
 class Public::CommentsController < ApplicationController
   
   def create
-      @post = Post.find(params[:post_id])
-      @comment = @post.comments.create(comment_params)
+       @post = Post.find(params[:post_id])
+       @comment = @post.comments.create(comment_params)
     if @comment.save
       redirect_to public_post_path(@post) notice: 'コメントしました'
     else
@@ -12,8 +12,8 @@ class Public::CommentsController < ApplicationController
   end
   
   def destroy
-      @post = Post.find(params[:post_id])
-      @comment = Comment.find(params[:id])
+       @post = Post.find(params[:post_id])
+       @comment = Comment.find(params[:id])
     if @comment.destroy
       redirect_to public_post_path(@post), notice: 'コメントを削除しました'
     else
