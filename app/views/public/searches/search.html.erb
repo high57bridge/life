@@ -1,24 +1,12 @@
 <h2>検索結果</h2>
 
 <table class="table table-hover table-inverse">
-  <!--検索対象モデルがCustomerの時 -->
-  <% if @range == "customer" %>
-    <tbody>
-      <% @customers.each do |customer| %>
-        <tr>
-          <td><%= customer.name %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  <% else %>
-    <!--検索対象モデルがcustomerではない時(= 検索対象モデルがPostの時) -->
-    <tbody>
+  <% @range == "Post" %>
+    <!--検索対象モデルがPostの時 -->
       <% @posts.each do |post| %>
         <tr>
           <td><%= post.name %></td>
           <td><%= post.introduction %></td>
         </tr>
       <% end %>
-    </tbody>
-  <% end %>
 </table>
