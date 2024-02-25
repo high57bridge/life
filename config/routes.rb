@@ -3,42 +3,42 @@ Rails.application.routes.draw do
   get "admin/homes/top" => "admin/homes#top", as: "top"
 
   namespace :admin do
-    resources :homes, only: [:show, :update]
-    resources :posts, only: [:show, :index, :edit, :new, :create, :update, :destroy]
+    resources :homes,     only: [:show, :update]
+    resources :posts,     only: [:show, :index, :edit, :new, :create, :update, :destroy]
     resources :customers, only: [:index, :show, :edit, :update, :destroy]
     resources :donations, only: :index
   end
 
   root to: 'public/homes#top'
-  get "/about" => "public/homes#about", as: "about"
+  get "/about"    => "public/homes#about",    as: "about"
   get "/complete" => "public/homes#complete", as: "complete"
 
   namespace :public do
     get "search" => "searches#search"
-    resources :homes, only: :create
-    resources :posts, only: [:new, :index, :show] do
-    resource  :favorites, only: [:create, :destroy]
-    resources :comments, only: [:create, :destroy]
-    resource  :tags, only: [:create, :destroy]
-  end
+    resources :homes,     only: :create
+    resources :posts,     only: [:new, :index, :show] do
+      resource  :favorites, only: [:create, :destroy]
+      resources :comments,  only: [:create, :destroy]
+      resource  :bookmarks, only: [:create, :destroy]
+      resource  :tags,      only: [:create, :destroy]
+    end
 
     resources :customers, only: :show
     resource :customers do
-      get :mypage, action: :show
-      get "information/edit", action: :edit
-      get :withdrawal
+      get   :mypage, action: :show
+      get   "information/edit", action: :edit
+      get   :withdrawal
       patch :information, action: :update
       patch :unsubscribe
     end
 
-    resources :donations, only: [:update, :index, :new, :create] do
+    resources :donations, only: [:index, :new, :show, :create, :update] do
       collection do
+        get  :information
         post :confirm
-        get :complete
+        get  :complete
       end
     end
-
-    resources :donation_details, only: [:index, :show]
   end
 
   devise_for :customer, skip: [:passwords], controllers: {
@@ -54,3 +54,4 @@ devise_scope :customer do
 end
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
+

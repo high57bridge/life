@@ -1,17 +1,28 @@
 class Public::DonationsController < ApplicationController
-
+  
+  def index
+    # @donations = current_customer.donations
+  end
+  
   def new
     @donation = Donation.new
   end
+  
+  def confirm
+    @donation = Donation.new(donation_params)
+  end
 
   def create
-       @total = 0
-       @donation = Donation.new(donation_params)
-    if params[:donation]
-       redirect_to public_donations_path
-    else
-      render :complete
+      @donation = Donation.new(donation_params)
+      @donation.save
+    current_customer.donations.each do |donation|
+      @donation_details = OrderDetail.new
+      @donation_details.payment_amount = donation.payment_amount
+      @donation_details.payment_method = donation.payment_method
+      @donation_details.donation_id = @donation.id
+      @donation_details.save
     end
+      redirect_to complete_public_donations_path
   end
 
   def update
@@ -22,7 +33,11 @@ class Public::DonationsController < ApplicationController
       render :index
     end
   end
-
+  
+  def show
+    @donation = Donation.find(params[:id])
+  end
+  
   private
 
   def donation_params

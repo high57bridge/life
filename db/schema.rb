@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_02_16_094049) do
+ActiveRecord::Schema.define(version: 2024_02_25_135212) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -52,6 +52,15 @@ ActiveRecord::Schema.define(version: 2024_02_16_094049) do
     t.index ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
   end
 
+  create_table "bookmarks", force: :cascade do |t|
+    t.integer "customer_id", null: false
+    t.integer "post_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["customer_id"], name: "index_bookmarks_on_customer_id"
+    t.index ["post_id"], name: "index_bookmarks_on_post_id"
+  end
+
   create_table "comments", force: :cascade do |t|
     t.integer "customer_id", null: false
     t.integer "post_id", null: false
@@ -81,6 +90,15 @@ ActiveRecord::Schema.define(version: 2024_02_16_094049) do
     t.index ["reset_password_token"], name: "index_customers_on_reset_password_token", unique: true
   end
 
+  create_table "donation_details", force: :cascade do |t|
+    t.integer "donation_id", null: false
+    t.string "payment_amount", null: false
+    t.string "payment_method", null: false
+    t.string "area", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "donations", force: :cascade do |t|
     t.integer "customer_id", null: false
     t.integer "payment_amount", null: false
@@ -91,9 +109,9 @@ ActiveRecord::Schema.define(version: 2024_02_16_094049) do
   end
 
   create_table "favorites", force: :cascade do |t|
-    t.integer "customer_id", null: false
-    t.integer "post_id", null: false
-    t.string "favorite", null: false
+    t.integer "customer_id"
+    t.integer "post_id"
+    t.string "favorite"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -123,4 +141,6 @@ ActiveRecord::Schema.define(version: 2024_02_16_094049) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "bookmarks", "customers"
+  add_foreign_key "bookmarks", "posts"
 end

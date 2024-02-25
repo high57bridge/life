@@ -1,7 +1,9 @@
 class Public::CustomersController < ApplicationController
   
   def show
+    @donations = current_customer.donations
     @customer = current_customer
+    @bookmarks = Bookmark.where(customer_id: current_customer.id)
   end
 
   def edit
