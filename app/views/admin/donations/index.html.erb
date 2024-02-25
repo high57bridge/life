@@ -1,0 +1,24 @@
+<h2>会員寄付履歴一覧</h2>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <td>寄付場所</td>
+        <td>寄付金額</td>
+        <td>寄付方法</td>
+        <td>寄付日</td>
+        <td>お名前</td>
+      </tr>
+    </thead>
+  <% @donations.each do |donation| %>
+    <tbody>
+      <tr>
+        <td><%= donation.area %></td>
+        <td><%= donation.payment %></td>
+        <td><%= donation.paymethod %></td>
+        <td><%= donation.created_at.strftime('%Y/%m/%d') %></td>
+        <td><%= donation.customer.last_name %><%= donation.customer.first_name %></td>
+      </tr>
+    </tbody>
+  <% end %>
+  </table>

@@ -1,0 +1,24 @@
+<h2>寄付履歴</h2>
+
+  <% @donation.donation_details.each do |donation_detail| %>
+    <table class="table">
+      <tr>
+        <td>寄付場所</td>
+        <td><%= donation_detail.donation.area %></td>
+      </tr>
+      <tr>
+        <td>寄付金額</td>
+        <td><%= donation_detail.donation.payment_amount %>円</td>
+      </tr>
+      <tr>
+        <td>支払方法</td>
+        <td><%= donation_detail.donation.payment_method %></td>
+      </tr>
+      <tr>
+        <td>寄付日</td>
+        <td><%= donation_detail.donation.created_at.strftime('%Y/%m/%d') %></td>
+      </tr>
+    </table>
+  <% end %>
+
+<%= link_to "もう一度寄付する", public_donations_path %>
