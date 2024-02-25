@@ -1,0 +1,35 @@
+<div class="container mt-2">
+  <div class="row">
+    <div class="col-md-8">
+      <h2>情報確認</h2>
+
+        <table>
+            <tr>
+              <th>支払方法 : </th>
+              <td><%#= @donation.payment_method_i18n %></td>
+            </tr>
+            <tr>
+              <th>寄付場所 : </th>
+              <td>石川県、富山県、新潟県</td>
+            </tr>
+            <tr>
+              <th>寄付金額 : </th>
+              <td><%#= @donation.payment_amount.to_s(:delimited) %></td>
+            </tr>
+        </table>
+
+        <%= form_with model: @donation, url: public_donations_path, method: :post do |f| %>
+          <%= f.hidden_field :payment_method %>
+          <%= f.hidden_field :area %>
+          <%= f.hidden_field :payment_amount %>
+          <div class="container mt-5">
+            <div class="row">
+              <div class="mx-auto">
+                <%= f.submit "お支払いを確定する" %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,9 @@
+<h2 class="font-weight-bold">本当に退会しますか？</h2>
+<h3>退会すると今まで保存したものや、<br>
+コメントしたものが見られなくなります。<br>
+復元をすることも不可能です。<br>
+よろしいですか？
+</h3>
+
+<%= link_to "マイページ", mypage_public_customers_path %>
+<%= link_to "退会手続きへ進む", unsubscribe_public_customers_path, method: :patch, "data-confirm" => "本当によろしいですか？" %>

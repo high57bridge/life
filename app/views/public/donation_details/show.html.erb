@@ -1,0 +1,22 @@
+<h2>寄付履歴詳細</h2>
+  
+    <table class="table">
+      <tr>
+        <td>寄付場所</td>
+        <td><%= @donation.area %></td>
+      </tr>
+      <tr>
+        <td>寄付金額</td>
+        <td><%= @donation.payment %>円</td>
+      </tr>
+      <tr>
+        <td>支払方法</td>
+        <td><%= @donation.paymethod %></td>
+      </tr>
+      <tr>
+        <td>寄付日</td>
+        <td><%= @donation.created_at.strftime('%Y/%m/%d') %></td>
+      </tr>
+    </table>
+
+<%= link_to "もう一度寄付する", public_donations_path %>

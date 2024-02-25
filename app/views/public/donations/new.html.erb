@@ -1,0 +1,26 @@
+<div class="container mt-2">
+  <div class="row">
+    <div class="col-md-8">
+      <h2>情報入力</h2>
+
+      <h5 class="font-weight-bold">支払方法</h5>
+
+      <%= form_with model: @donation, url: confirm_public_donations_path do |f| %>
+        <%= f.radio_button :payment_method, Donation.payment_methods.key(0), checked: "checked" %>
+        <%= f.label :payment_method_credit_card, Donation.payment_methods_i18n[:credit_card] %><br>
+      
+        <%= f.radio_button :payment_method, Donation.payment_methods.key(1) %>
+        <%= f.label :payment_method_transfer, Donation.payment_methods_i18n[:transfer]%>
+
+        <h5 class="font-weight-bold">寄付場所</h5>
+        <h5>義援金をお届けする県は下記の通りです。</h5>
+        <h6>石川県、富山県、新潟県</h6>
+
+      <h5 class="font-weight-bold">寄付金額</h5>
+        <%= f.text_field :payment, autofocus: true, placeholder: "100円から募金できます" %>円
+        <%= f.submit "変更", class: 'btn btn-success btn-sm', method: :patch %>
+        <%= f.submit "次へ進む", class: 'btn btn-primary' %>
+      <% end %>
+    </div>
+  </div>
+</div>

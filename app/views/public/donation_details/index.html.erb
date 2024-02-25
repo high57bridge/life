@@ -1,0 +1,21 @@
+<h2>寄付履歴一覧</h2>
+  
+    <table class="table">
+      <thead>
+        <tr>
+          <td>寄付場所</td>
+          <td>寄付日</td>
+        </tr>
+      </thead>
+    <% @donations.each do |donation| %>
+      <tbody>
+        <tr>
+          <td><%= donation.area %></td>
+          <td><%= donation.created_at.strftime('%Y/%m/%d') %></td>
+        </tr>
+      </tbody>
+      <%= link_to "詳細を見る", public_donation_detail_path(donation) %>
+    <% end %>
+    </table>
+ 
+ 

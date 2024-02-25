@@ -1,0 +1,42 @@
+<h2>会員情報の変更</h2>
+<%= form_with model: @customer, url: information_public_customers_path do |f| %>
+<table>
+  <tr>
+    <td><%= f.label :氏名 %></td>
+    <td>
+      <%= f.text_field :last_name, autofocus: true, id:"inputName" %>
+      <%= f.text_field :first_name, autofocus: true, id:"inputName" %>
+    </td>
+  </tr>
+  <tr>
+    <td><%= f.label :フリガナ %></td>
+    <td>
+      <%= f.text_field :last_name_kana, autofocus: true, id:"inputName" %>
+      <%= f.text_field :first_name_kana, autofocus: true, id:"inputName" %>
+    </td>
+  </tr>
+  <tr>
+    <td><%= f.label :郵便番号 %></td>
+    <td><%= f.text_field :postal_code, autofocus: true %></td>
+  </tr>
+  <tr>
+    <td><%= f.label :住所 %></td>
+    <td><%= f.text_field :address, autofocus: true %></td>
+  </tr>
+  <tr>
+    <td><%= f.label :電話番号 %></td>
+    <td><%= f.text_field :telephone_number, autofocus: true %></td>
+  </tr>
+  <tr>
+    <td><%= f.label :メールアドレス %></td>
+    <td><%= f.text_field :email, autofocus: true, autocomplete: "email" %></td>
+  </tr>
+  <tr>
+    <td><%= f.label :自治体 %></td>
+    <td><%= f.text_field :municipality_name, autofocus: true %></td>
+  </tr>
+</table>
+
+<%= f.submit "変更を保存" %>
+<%= link_to "退会する", withdrawal_public_customers_path %>
+<% end %>
