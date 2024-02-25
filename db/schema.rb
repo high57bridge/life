@@ -83,8 +83,8 @@ ActiveRecord::Schema.define(version: 2024_02_16_094049) do
 
   create_table "donations", force: :cascade do |t|
     t.integer "customer_id", null: false
-    t.integer "payment", null: false
-    t.integer "paymethod", null: false
+    t.integer "payment_amount", null: false
+    t.integer "payment_method", null: false
     t.string "area", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

@@ -6,7 +6,7 @@ Rails.application.routes.draw do
     resources :homes, only: [:show, :update]
     resources :posts, only: [:show, :index, :edit, :new, :create, :update, :destroy]
     resources :customers, only: [:index, :show, :edit, :update, :destroy]
-    resources :donations, only: [:show]
+    resources :donations, only: :index
   end
 
   root to: 'public/homes#top'
@@ -14,11 +14,12 @@ Rails.application.routes.draw do
   get "/complete" => "public/homes#complete", as: "complete"
 
   namespace :public do
+    get "search" => "searches#search"
     resources :homes, only: :create
     resources :posts, only: [:new, :index, :show] do
-    resource :favorites, only: [:create, :destroy]
+    resource  :favorites, only: [:create, :destroy]
     resources :comments, only: [:create, :destroy]
-    resource :tags, only: [:create, :destroy]
+    resource  :tags, only: [:create, :destroy]
   end
 
     resources :customers, only: :show

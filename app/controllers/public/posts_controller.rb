@@ -31,21 +31,4 @@ class Public::PostsController < ApplicationController
     @post = Post.new
   end
 
-sort = params[:sort] || "created_at DESC"
-@keyword = params[:keyword]
-
-if @keyword.present?
-  # 変更点①
-  @products = Product.order(sort)
-  # 分割したキーワードごとに検索
-  @keyword.split(/[[:blank:]]+/).each do |keyword|
-    next if keyword == ""
-    # 変更点②
-    @products = @products.where('name LIKE(?) OR description LIKE(?)', "%#{keyword}%", "%#{keyword}%")
-  end
-  # 今回は@products.uniq!は必要ないです
-else
-  @products = Product.order(sort)
-end
-
 end
