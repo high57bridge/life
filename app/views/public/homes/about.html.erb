@@ -24,15 +24,6 @@
         <td>ご意見・ご質問内容</td>
         <td><%= f.text_area :opinion, autofocus: true %></td>
       </tr>
-      <tr>
-        <td>選択して下さい</td>
-        <td>
-          <%= f.radio_button :is_active, 1 %>
-          <%= f.label :is_active, "ご意見" %>
-          <%= f.radio_button :is_active, 2 %>
-          <%= f.label :is_active, "ご質問" %>
-        </td>
-      </tr>
     </table>
     <%= f.submit "送信" %>
     <% end %>

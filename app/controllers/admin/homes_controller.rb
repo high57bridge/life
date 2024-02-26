@@ -20,6 +20,6 @@ class Admin::HomesController < ApplicationController
   private
 
   def home_params
-    params.require(:home).permit(:is_active)
+    params.require(:home).permit(:is_active, :status)
   end
 end

@@ -1,28 +1,33 @@
 class Public::DonationsController < ApplicationController
-  
+
   def index
     # @donations = current_customer.donations
   end
-  
+
   def new
     @donation = Donation.new
   end
-  
+
   def confirm
     @donation = Donation.new(donation_params)
   end
 
   def create
-      @donation = Donation.new(donation_params)
-      @donation.save
-    current_customer.donations.each do |donation|
-      @donation_details = OrderDetail.new
-      @donation_details.payment_amount = donation.payment_amount
-      @donation_details.payment_method = donation.payment_method
-      @donation_details.donation_id = @donation.id
-      @donation_details.save
+       @donation = Donation.new(donation_params)
+       @donation.customer_id = current_customer.id
+    if @donation.save
+       redirect_to complete_public_donations_path
+    else
+      render :new
     end
-      redirect_to complete_public_donations_path
+      
+    # 下記のコードは金額のバックアップを残すためのもの
+      @donation_details = DonationDetail.new
+      @donation_details.payment_amount = @donation.payment_amount
+      @donation_details.payment_method = @donation.payment_method
+      @donation_details.donation_id = @donation.id
+      @donation_details.area = @donation.area
+      @donation_details.save
   end
 
   def update
@@ -33,11 +38,11 @@ class Public::DonationsController < ApplicationController
       render :index
     end
   end
-  
-  def show
-    @donation = Donation.find(params[:id])
+
+  def index
+    @donations = current_customer.donations
   end
-  
+
   private
 
   def donation_params
