@@ -120,7 +120,7 @@ ActiveRecord::Schema.define(version: 2024_02_25_135212) do
     t.string "name", null: false
     t.string "email", null: false
     t.text "opinion", null: false
-    t.boolean "is_active", null: false
+    t.boolean "is_active"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

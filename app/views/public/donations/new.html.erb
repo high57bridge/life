@@ -13,8 +13,15 @@
         <%= f.label :payment_method_transfer, Donation.payment_methods_i18n[:transfer]%>
 
         <h5 class="font-weight-bold">寄付場所</h5>
-        <h5>義援金をお届けする県は下記の通りです。</h5>
-        <h6>石川県、富山県、新潟県</h6>
+        <h5>義援金をお届けする県は下記から選択してください</h5>
+          <%= f.radio_button :area, "石川県" %>
+          <%= f.label :area, "石川県" %>
+      
+          <%= f.radio_button :area, "富山県" %>
+          <%= f.label :area, "富山県" %>
+      
+          <%= f.radio_button :area, "新潟県" %>
+          <%= f.label :area, "新潟県" %>
 
       <h5 class="font-weight-bold">寄付金額</h5>
         <%= f.select :payment_amount, *[1000.step(10000, 1000).to_a], value: @donation.payment_amount %>円

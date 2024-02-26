@@ -32,7 +32,7 @@ Rails.application.routes.draw do
       patch :unsubscribe
     end
 
-    resources :donations, only: [:index, :new, :show, :create, :update] do
+    resources :donations, only: [:index, :new, :create, :update] do
       collection do
         get  :information
         post :confirm
