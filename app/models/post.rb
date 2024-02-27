@@ -2,7 +2,7 @@ class Post < ApplicationRecord
   has_one_attached :image
   validates :image, presence: true
   
-  has_many :comments, dependent: :destroy
+  has_many :comments, dependent: :destroy  # Post.comments で、その投稿のコメント取得
   has_many :favorites, dependent: :destroy
 
   def favorited_by?(customer)
@@ -15,6 +15,30 @@ class Post < ApplicationRecord
     bookmarks.where(customer_id: customer).exists?
   end
   
+  has_many :tagmaps, dependent: :destroy
+  has_many :tags, through: :tagmaps
+  
+  #検索メソッド、タイトルと内容をあいまい検索する
+  def self.posts_serach(search)
+    Post.where(['title LIKE ? OR content LIKE ?', "%#{search}%", "%#{search}%"])
+  end
+  
+  def save_posts(tags)
+    current_tags = self.tags.pluck(:name) unless self.tags.nil?
+    old_tags = current_tags - tags
+    new_tags = tags - current_tags
+  
+    # Destroy
+    old_tags.each do |old_name|
+      self.tags.delete Tag.find_by(name:old_name)
+    end
+  
+    # Create
+    new_tags.each do |new_name|
+      post_tag = Tag.find_or_create_by(name:new_name)
+      self.tags << post_tag
+    end
+  end
   
 # 検索方法分岐
   def self.looks(search, word)

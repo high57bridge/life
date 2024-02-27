@@ -1,68 +1,96 @@
 <div class="container mt-2">
-  <div class="row">
-    <div class="col-md-8">
-        <h3>お知らせ詳細画面</h3>
-            <table class="table">
-                <tr>
-                    <th>避難場所の画像・地図</th>
-                    <td>
-                        <% if @post.image.present? %>
-                            <%= image_tag @post.image, size: "100x100" %>
-                        <% end %>
-                    </td>
-                </tr>
-                <tr>
-                    <th>避難場所</th>
-                    <td><%= @post.name %></td>
-                </tr>
-                <tr>
-                    <th>避難場所に関しての説明</th>
-                    <td><%= @post.introduction %></td>
-                </tr>
-                <tr>
-                    <th>避難場所の住所</th>
-                    <td><%= @post.address %></td>
-                </tr>
-                <tr>
-                    <th>登録日時</th>
-                    <td><%= @post.created_at.strftime('%Y/%m/%d') %></td>
-                </tr>
-            </table>
-
+    <div class="row">
+        <div class="col-md-8">
+            <h3>お知らせ詳細画面</h3>
+                <table class="table">
+                    <tr>
+                        <th>避難場所の画像・地図</th>
+                        <td>
+                            <% if @post.image.present? %>
+                                <%= image_tag @post.image, size: "100x100" %>
+                            <% end %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><i class="fa-solid fa-person-running text-danger"></i>避難場所</th>
+                        <td><%= @post.name %></td>
+                    </tr>
+                    <tr>
+                        <th><i class="fa-solid fa-house text-danger"></i>避難場所に関しての説明</th>
+                        <td><%= @post.introduction %></td>
+                    </tr>
+                    <tr>
+                        <th>避難場所の住所</th>
+                        <td><%= @post.address %></td>
+                    </tr>
+                    <tr>
+                        <th>登録日時</th>
+                        <td><%= @post.created_at.strftime('%Y/%m/%d') %></td>
+                    </tr>
+                </table>
+<!--いいね表示-->
 <% if @post.favorited_by?(current_customer) %>
-    <p>
+    <p>  <!--いいね作成-->
       <%= link_to public_post_favorites_path(@post), method: :delete do %>
         <i class="fa-solid fa-heart"></i><%= @post.favorites.count %> いいね
       <% end %>
     </p>
     <% else %>
-    <p>
+    <p>  <!--いいね削除-->
       <%= link_to public_post_favorites_path(@post), method: :post do %>
         <i class="fa-regular fa-heart"></i><%= @post.favorites.count %> いいね
       <% end %>
     </p>
 <% end %>
 
+<!--ブックマーク表示-->
 <% if @post.bookmarked_by?(current_customer) %>
-    <p>
+    <p>  <!--ブックマーク作成-->
         <%= link_to public_post_bookmarks_path(@post), method: :delete do %>
             <i class="fa-solid fa-bookmark"></i><%= @post.bookmarks.count %> ブックマーク
         <% end %>
     </p>
         <% else %>
-    <p>
+    <p>  <!--ブックマーク削除-->
         <%= link_to public_post_bookmarks_path(@post), method: :post do %>
             <i class="fa-regular fa-bookmark"></i><%= @post.bookmarks.count %> ブックマーク
         <% end %>
     </p>
 <% end %>
 
-    <!--コメント表示-->
-   コメント件数：<%= @post.comments.count %>
-    <% @post.comments.each do |comment| %>
-        ユーザーネーム：<%= comment.customer.last_name %><%= comment.customer.first_name %>
-        <%= comment.created_at.strftime('%Y/%m/%d') %><%= comment.comment %>
-        <%= link_to "削除", public_post_comment_path(@post, comment), method: :delete, "data-confirm" => "本当に削除しますか？" %>
+<!--コメント表示-->
+コメント件数：<%= @post.comments.count %>
+    <% @post.comments.each do |c| %>
+        <div style="width:55%" class="border-info border rounded m-1">
+            <div class="d-flex justify-center flex-wrap">
+                <p class="font-weight-bold mr-2">  <!--投稿者のIDと名前-->
+                    [<%= c.customer.id %>]<%= c.customer.last_name %><%= c.customer.first_name %> 
+                </p>
+                <%= c.created_at.strftime('%Y/%m/%d %H:%M') %>  <!--投稿日時-->
+                
+            <!--ログインしている本人のみ操作できるようにするための分岐-->
+                <% if c.customer.id == current_customer.id %>
+                    <!--コメント削除には、@post（親）, @commentsのc に渡す必要がある-->
+                        <%= link_to edit_public_post_comment_path(@post, c), class: 'text-success' do %>
+                            <i class="fa-solid fa-pen-to-square ml-2"></i> 編集
+                        <% end %>
+                        <%= link_to public_post_comment_path(@post, c), method: :delete, "data-confirm" => "本当に削除しますか？", class: 'text-danger' do %>
+                            <i class="fa-solid fa-trash ml-2"></i> 削除
+                        <% end %>
+                <% end %>
+            </div>
+                <%= simple_format(c.comment) %>   <!--改行ありで表示-->
+        </div>
     <% end %>
 
-    <%= link_to "戻る", public_posts_path %>
+<!--コメント投稿-->
+    <div class="mt-2">
+        <%= form_with model: [@post, @comment], url: public_post_comments_path(@post) do |f| %>  <!--comment は、postに紐づくので、配列で書く-->
+            <%= f.text_area :comment, size: "30x3" %>
+            <%= f.submit "投稿" %>
+        <% end %>
+    </div>
+        <%= link_to "前のページに戻る", public_posts_path, class: 'btn btn-info'  %>
+        </div>
+    </div>
+</div>

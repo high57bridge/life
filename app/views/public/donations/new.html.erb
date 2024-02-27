@@ -10,16 +10,20 @@
         <%= f.label :payment_method_credit_card, Donation.payment_methods_i18n[:credit_card] %><br>
 
         <%= f.radio_button :payment_method, Donation.payment_methods.key(1) %>
-        <%= f.label :payment_method_transfer, Donation.payment_methods_i18n[:transfer]%>
+        <%= f.label :payment_method_transfer, Donation.payment_methods_i18n[:transfer]%><br>
+
+        <%= f.radio_button :payment_method, Donation.payment_methods.key(2) %>
+        <%= f.label :payment_method_paypay, Donation.payment_methods_i18n[:paypay]%>
 
         <h5 class="font-weight-bold">寄付場所</h5>
         <h5>義援金をお届けする県は下記から選択してください</h5>
-          <%= f.radio_button :area, "石川県" %>
+
+          <%= f.radio_button :area, "石川県", checked: "checked" %>
           <%= f.label :area, "石川県" %>
-      
+
           <%= f.radio_button :area, "富山県" %>
           <%= f.label :area, "富山県" %>
-      
+
           <%= f.radio_button :area, "新潟県" %>
           <%= f.label :area, "新潟県" %>
 

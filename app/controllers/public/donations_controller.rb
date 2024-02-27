@@ -1,7 +1,7 @@
 class Public::DonationsController < ApplicationController
 
   def index
-    # @donations = current_customer.donations
+    @donations = current_customer.donations
   end
 
   def new
@@ -37,10 +37,6 @@ class Public::DonationsController < ApplicationController
     else
       render :index
     end
-  end
-
-  def index
-    @donations = current_customer.donations
   end
 
   private
