@@ -1,23 +1,28 @@
-<h3>寄付履歴</h3>
+<div class="container mt-2">
+  <div class="row">
+    <div class="col-md-8">
+      <h3>寄付履歴</h3>
+        <% @donations.each do |donation| %>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>寄付場所</th>
+                <th>寄付金額</th>
+                <th>支払方法</th>
+                <th>寄付日</th>
+              </tr>
+            </thead>
 
-  <% @donations.each do |donation| %>
-    <table class="table">
-      <thead>
-        <tr>
-          <th>寄付場所</th>
-          <th>寄付金額</th>
-          <th>支払方法</th>
-          <th>寄付日</th>
-        </tr>
-      </thead>
-      
-      <tbody>
-        <tr>
-          <td><%= donation.area %></td>
-          <td><%= donation.payment_amount.to_s(:delimited) %>円</td>
-          <td><%= donation.payment_method_i18n %></td>
-          <td><%= donation.created_at.strftime('%Y/%m/%d') %></td>
-        </tr>
-      </tbody>
-    </table>
-  <% end %>
+            <tbody>
+              <tr>
+                <td><%= donation.area %></td>
+                <td><%= donation.payment_amount.to_s(:delimited) %>円</td>
+                <td><%= donation.payment_method_i18n %></td>
+                <td><%= donation.created_at.strftime('%Y/%m/%d') %></td>
+              </tr>
+            </tbody>
+          </table>
+        <% end %>
+    </div>
+  </div>
+</div>
