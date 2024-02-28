@@ -60,26 +60,30 @@
 
 <!--コメント表示-->
 コメント件数：<%= @post.comments.count %>
-    <% @post.comments.each do |c| %>
+    <% @post.comments.each do |comment| %>
         <div style="width:55%" class="border-info border rounded m-1">
             <div class="d-flex justify-center flex-wrap">
                 <p class="font-weight-bold mr-2">  <!--投稿者のIDと名前-->
-                    [<%= c.customer.id %>]<%= c.customer.last_name %><%= c.customer.first_name %> 
+                    [<%= comment.customer.id %>]<%= comment.customer.last_name %><%= comment.customer.first_name %>
                 </p>
-                <%= c.created_at.strftime('%Y/%m/%d %H:%M') %>  <!--投稿日時-->
-                
+                <%= comment.created_at.strftime('%Y/%m/%d %H:%M') %>  <!--投稿日時-->
+
             <!--ログインしている本人のみ操作できるようにするための分岐-->
-                <% if c.customer.id == current_customer.id %>
+                <% if customer_signed_in? && (current_customer == comment.customer) %>
                     <!--コメント削除には、@post（親）, @commentsのc に渡す必要がある-->
-                        <%= link_to edit_public_post_comment_path(@post, c), class: 'text-success' do %>
-                            <i class="fa-solid fa-pen-to-square ml-2"></i> 編集
-                        <% end %>
-                        <%= link_to public_post_comment_path(@post, c), method: :delete, "data-confirm" => "本当に削除しますか？", class: 'text-danger' do %>
-                            <i class="fa-solid fa-trash ml-2"></i> 削除
-                        <% end %>
+                    <span data-comment-id=<%= comment.id %> class="js-edit-comment-button" >
+                        <i class="fa-solid fa-pen-to-square ml-2 text-success"></i> 編集
+                    </span>
+
+                    <%= link_to public_post_comment_path(@post, comment), method: :delete, "data-confirm" => "本当に削除しますか？", class: 'text-danger' do %>
+                        <i class="fa-solid fa-trash ml-2"></i> 削除
+                    <% end %>
+
+                    <div id="js-comment-<%= comment.id %>">
+                        <%= render "public/comments/js_comment", comment: comment %>
+                    </div>
                 <% end %>
             </div>
-                <%= simple_format(c.comment) %>   <!--改行ありで表示-->
         </div>
     <% end %>
 

@@ -16,8 +16,7 @@ class Public::PostsController < ApplicationController
   end
 
   def index
-      # @posts = Post.all
-       @posts = Post.page(params[:page]).per(10)
+       @posts = Post.page(params[:page]).per(5)
        @tag_lists = Tag.all
        @total_post = Post.count   # 何件投稿されているか確認するため
     if params[:search].present?   #検索フォームに入力があった場合

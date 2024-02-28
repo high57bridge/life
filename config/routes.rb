@@ -20,7 +20,7 @@ Rails.application.routes.draw do
     resources :homes,     only: :create
     resources :posts,     only: [:new, :index, :show] do
       resource  :favorites, only: [:create, :destroy]
-      resources :comments,  only: [:create, :edit, :update, :destroy]
+      resources :comments,  only: [:create, :update, :destroy]
       resource  :bookmarks, only: [:create, :destroy]
       resource  :tags,      only: [:create, :destroy]
     end

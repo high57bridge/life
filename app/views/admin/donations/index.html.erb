@@ -23,14 +23,4 @@
   <% end %>
   </table>
 
-  <%# @total += @donations.subtotal %>
-  <%#= total_payment = @donations.payment_amount + @total %>
-  <div>合計金額: <%#= total_payment.to_s(:delimited) %>円</div>
-  
-  <!--コメント表示-->
-   
-    <% @post.comments.each do |comment| %>
-        <%= comment.customer.last_name %><%= comment.customer.first_name %>
-        <%= comment.comment %>
-        <%= link_to "削除", public_post_comment_path(@post, comment), method: :delete, "data-confirm" => "本当に削除しますか？" %>
-    <% end %>
+  <div>合計金額: <%= @donation_payment_total.to_s(:delimited) %>円</div>
