@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_02_27_120118) do
+ActiveRecord::Schema.define(version: 2024_02_29_110949) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -116,11 +116,25 @@ ActiveRecord::Schema.define(version: 2024_02_27_120118) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "hashtags", force: :cascade do |t|
+    t.integer "post_id", null: false
+    t.integer "tag_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["post_id"], name: "index_hashtags_on_post_id"
+    t.index ["tag_id"], name: "index_hashtags_on_tag_id"
+  end
+
   create_table "homes", force: :cascade do |t|
     t.string "name", null: false
     t.string "email", null: false
     t.text "opinion", null: false
     t.boolean "is_active"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "post_helpers", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -131,15 +145,6 @@ ActiveRecord::Schema.define(version: 2024_02_27_120118) do
     t.string "address", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "tagmaps", force: :cascade do |t|
-    t.integer "post_id", null: false
-    t.integer "tag_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["post_id"], name: "index_tagmaps_on_post_id"
-    t.index ["tag_id"], name: "index_tagmaps_on_tag_id"
   end
 
   create_table "tags", force: :cascade do |t|
@@ -153,6 +158,6 @@ ActiveRecord::Schema.define(version: 2024_02_27_120118) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "bookmarks", "customers"
   add_foreign_key "bookmarks", "posts"
-  add_foreign_key "tagmaps", "posts"
-  add_foreign_key "tagmaps", "tags"
+  add_foreign_key "hashtags", "posts"
+  add_foreign_key "hashtags", "tags"
 end

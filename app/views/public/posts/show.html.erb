@@ -17,7 +17,7 @@
                     </tr>
                     <tr>
                         <th><i class="fa-solid fa-house text-danger"></i>避難場所に関しての説明</th>
-                        <td><%= @post.introduction %></td>
+                        <td><%= @post.introduction %><%= render_with_tags(@post.introduction) %></td>
                     </tr>
                     <tr>
                         <th>避難場所の住所</th>
@@ -67,6 +67,7 @@
                     [<%= comment.customer.id %>]<%= comment.customer.last_name %><%= comment.customer.first_name %>
                 </p>
                 <%= comment.created_at.strftime('%Y/%m/%d %H:%M') %>  <!--投稿日時-->
+
 
             <!--ログインしている本人のみ操作できるようにするための分岐-->
                 <% if customer_signed_in? && (current_customer == comment.customer) %>
