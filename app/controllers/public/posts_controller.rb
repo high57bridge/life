@@ -52,5 +52,10 @@ class Public::PostsController < ApplicationController
     end
   end
 
+  def tag
+    @customer = current_customer
+    @tag = Tag.find_by(name: params[:name])
+    @posts = @tag.posts
+  end
 
 end

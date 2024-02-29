@@ -24,6 +24,8 @@ Rails.application.routes.draw do
       resource  :bookmarks, only: [:create, :destroy]
       resource  :tags,      only: [:create, :destroy]
     end
+    
+    get '/tag/:name' => 'tags#tag', as: "hashtag"
 
     resources :customers, only: :show
     resource :customers do

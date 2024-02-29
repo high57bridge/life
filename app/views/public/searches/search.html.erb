@@ -1,12 +1,34 @@
-<h2>検索結果</h2>
+<h3>検索結果</h3>
 
 <table class="table table-hover table-inverse">
   <% @range == "Post" %>
-    <!--検索対象モデルがPostの時 -->
+    <!--検索対象モデルがPost -->
+    <thead>
+      <tr>
+        <th>画像・地図</th>
+        <th>場所</th>
+        <th>説明</th>
+        <th>住所</th>
+        <th>投稿日</th>
+      </tr>
+    </thead>
       <% @posts.each do |post| %>
+      <tbody>
         <tr>
+          <td>
+            <% if post.image.present? %>
+              <%= link_to public_post_path(post) do %>
+                <%= image_tag post.image, size: "200x150" %>
+              <% end %>
+            <% end %>
+          </td>
           <td><%= post.name %></td>
           <td><%= post.introduction %></td>
+          <td><%= post.address %></td>
+          <td><%= post.created_at.strftime('%Y/%m/%d') %></td>
         </tr>
+      </tbody>
       <% end %>
 </table>
+
+<div>※上記の画像・地図を押すと、詳細ページに進みます</div>
