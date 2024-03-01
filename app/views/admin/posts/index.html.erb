@@ -19,6 +19,8 @@
     <tbody>
       <tr>
         <td>
+          <div style="width: 100vw; height: 100vh" id="mapContainer"></div>
+          <script type="module" src="js/app.js"></script>
           <% if post.image.present? %>
             <%= link_to admin_post_path(post) do %>
               <%= image_tag post.image, size: "250x200" %>

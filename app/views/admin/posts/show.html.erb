@@ -6,6 +6,54 @@
                     <tr>
                         <th>避難場所の画像・地図</th>
                         <td>
+                            <div style="width: 50vw; height: 50vh" id="map"></div>
+                            <script>
+                                var platform = new H.service.Platform({
+                                  'apikey': '<%= ENV['HERE_MAP_API_KEY'] %>'
+                                });
+                                // configure an OMV service to use the `core` enpoint
+                                var omvService = platform.getOMVService({path:  'v2/vectortiles/core/mc'});
+                                var baseUrl = 'https://js.api.here.com/v3/3.1/styles/omv/oslo/japan/';
+
+                                // create a Japan specific style
+                                var style = new H.map.Style(`${baseUrl}normal.day.yaml`, baseUrl);
+                                
+                                // instantiate provider and layer for the basemap
+                                var omvProvider = new H.service.omv.Provider(omvService, style);
+                                var omvlayer = new H.map.layer.TileLayer(omvProvider);
+                                var position = {lat: <%= @post.latitude %>, lng: <%= @post.longitude %>}
+                                
+                                // Get an instance of the geocoding service:
+                                var service = platform.getSearchService();
+
+                                // Call the "autosuggest" method with the search parameters,
+                                // the callback and an error callback function (called if a
+                                // communication error occurs):
+                                service.autosuggest({
+                                  // Search query
+                                  q: '<%= @post.address %>',
+                                  // Center of the search context
+                                  at: '<%= @post.latitude %>,<%= @post.longitude %>'
+                                }, (result) => {
+                                  let center = result.items[0].position
+                                  // instantiate (and display) a map:
+                                  var map = new H.Map(
+                                      document.getElementById('map'),
+                                      omvlayer,
+                                      {
+                                        zoom: 17,
+                                        center: center ?? position
+                                      });
+                                  map.addObject(new H.map.Marker(center))
+                                
+                                  // make map interactive
+                                  window.addEventListener('resize', () => map.getViewPort().resize());
+                                  var behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
+                                }, (error) => {
+                                  console.error(error)
+                                });
+                            </script>
+                            
                             <% if @post.image.present? %>
                                 <%= image_tag @post.image, size: "250x200" %>
                             <% end %>
