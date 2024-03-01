@@ -2,23 +2,29 @@
 
 <%= form_with model: @post, url: admin_posts_path do |f| %>
 
-<table class="table">
-  <tr>
-    <td>避難場所の画像・地図</td>
-    <td><%= f.file_field :image, accept: "image*/" %></td>
-  </tr>
-  <tr>
-    <td>避難場所</td>
-    <td><%= f.text_field :name %></td>
-  </tr>
-  <tr>
-    <td>避難場所に関しての説明</td>
-    <td><%= f.text_area :introduction %></td>
-  </tr>
-  <tr>
-    <td>避難場所の住所</td>
-    <td><%= f.text_field :address %></td>
-  </tr>
-</table>
-<%= f.submit "投稿" %>
+    <div class="field">
+      避難場所の画像・地図
+        <%= form.label :address, "場所" %>
+        <%= form.text_field :address %>
+        <%= f.file_field :image, accept: "image*/" %>
+    </div>
+    
+    <div class="field">
+      避難場所
+        <%= f.text_field :name %>
+    </div>
+        
+    <div class="field">
+      避難場所に関しての説明
+        <%= f.text_area :introduction %>
+    </div>
+        
+    <div class="field">
+      避難場所の住所
+        <%= f.text_field :address %>
+    </div>
+    
+    <div class="actions">
+      <%= f.submit "投稿" %>
+    </div>
 <% end %>
