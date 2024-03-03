@@ -2,11 +2,7 @@
     <div class="row">
         <div class="col-md-8">
             <h3>お知らせ詳細画面</h3>
-                <table class="table">
-                    <tr>
-                        <th>避難場所の画像・地図</th>
-                        <td>
-                            <div style="width: 50vw; height: 50vh" id="map"></div>
+                <div style="width: 50vw; height: 50vh" id="map"></div>
                             <script>
                                 var platform = new H.service.Platform({
                                   'apikey': '<%= ENV['HERE_MAP_API_KEY'] %>'
@@ -54,6 +50,10 @@
                                 });
                             </script>
                             
+                <table class="table">
+                    <tr>
+                        <th>避難場所の画像・地図</th>
+                        <td>
                             <% if @post.image.present? %>
                                 <%= image_tag @post.image, size: "250x200" %>
                             <% end %>
