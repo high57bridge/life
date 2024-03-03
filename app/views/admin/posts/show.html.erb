@@ -1,40 +1,102 @@
-<h2>お知らせ詳細画面</h2>
-    <table class="table">
-        <tr>
-            <th>避難場所の画像・地図</th>
-            <td>
-                <% if @post.image.present? %>
-                    <%= image_tag @post.image, size: "100x100" %>
+<div class="container mt-2">
+    <div class="row">
+        <div class="col-md-8">
+            <h3>お知らせ詳細画面</h3>
+                <div style="width: 50vw; height: 50vh" id="map"></div>
+                            <script>
+                                var platform = new H.service.Platform({
+                                  'apikey': '<%= ENV['HERE_MAP_API_KEY'] %>'
+                                });
+                                // configure an OMV service to use the `core` enpoint
+                                var omvService = platform.getOMVService({path:  'v2/vectortiles/core/mc'});
+                                var baseUrl = 'https://js.api.here.com/v3/3.1/styles/omv/oslo/japan/';
+
+                                // create a Japan specific style
+                                var style = new H.map.Style(`${baseUrl}normal.day.yaml`, baseUrl);
+                                
+                                // instantiate provider and layer for the basemap
+                                var omvProvider = new H.service.omv.Provider(omvService, style);
+                                var omvlayer = new H.map.layer.TileLayer(omvProvider);
+                                var position = {lat: <%= @post.latitude %>, lng: <%= @post.longitude %>}
+                                
+                                // Get an instance of the geocoding service:
+                                var service = platform.getSearchService();
+
+                                // Call the "autosuggest" method with the search parameters,
+                                // the callback and an error callback function (called if a
+                                // communication error occurs):
+                                service.autosuggest({
+                                  // Search query
+                                  q: '<%= @post.address %>',
+                                  // Center of the search context
+                                  at: '<%= @post.latitude %>,<%= @post.longitude %>'
+                                }, (result) => {
+                                  let center = result.items[0].position
+                                  // instantiate (and display) a map:
+                                  var map = new H.Map(
+                                      document.getElementById('map'),
+                                      omvlayer,
+                                      {
+                                        zoom: 17,
+                                        center: center ?? position
+                                      });
+                                  map.addObject(new H.map.Marker(center))
+                                
+                                  // make map interactive
+                                  window.addEventListener('resize', () => map.getViewPort().resize());
+                                  var behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
+                                }, (error) => {
+                                  console.error(error)
+                                });
+                            </script>
+                            
+                <table class="table">
+                    <tr>
+                        <th>避難場所の画像・地図</th>
+                        <td>
+                            <% if @post.image.present? %>
+                                <%= image_tag @post.image, size: "250x200" %>
+                            <% end %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>避難場所</th>
+                        <td><%= @post.name %></td>
+                    </tr>
+                    <tr>
+                        <th>避難場所に関しての説明</th>
+                        <td><%= @post.introduction %></td>
+                    </tr>
+                    <tr>
+                        <th>避難場所の住所</th>
+                        <td><%= @post.address %></td>
+                    </tr>
+                    <tr>
+                        <th>更新日</th>
+                        <td><%= @post.updated_at.strftime('%Y/%m/%d') %></td>
+                    </tr>
+                </table>
+                
+    <div class="mt-2">
+        <%= link_to "投稿を編集する", edit_admin_post_path, class: 'btn btn-success' %>
+        <%= link_to "投稿を削除する", admin_post_path, method: :delete, "data-confirm" => "本当に削除しますか", class: 'btn btn-danger' %>
+    </div>
+
+<!--コメント表示-->
+コメント件数：<%= @post.comments.count %>
+    <% @post.comments.each do |c| %>
+        <div style="width:55%" class="border-info border rounded">
+            <p class="font-weight-bold">  <!--投稿者のIDと名前-->
+                [<%= c.customer.id %>]<%= c.customer.last_name %><%= c.customer.first_name %>
+            </p>
+                <%= simple_format(c.comment) %>   <!--改行ありで表示-->
+                <%= c.created_at.strftime('%Y/%m/%d %H:%M') %>  <!--投稿日時-->
+                <!--コメント削除には、@post（親）, @commentsのc に渡す必要がある-->
+                <%= link_to admin_post_comment_path(@post, c), method: :delete, "data-confirm" => "本当に削除しますか？", class: 'text-danger' do %>
+                    <i class="fa-solid fa-trash"></i> 削除
                 <% end %>
-            </td>
-        </tr>
-        <tr>
-            <th>避難場所</th>
-            <td><%= @post.name %></td>
-        </tr>
-        <tr>
-            <th>避難場所に関しての説明</th>
-            <td><%= @post.introduction %></td>
-        </tr>
-        <tr>
-            <th>避難場所の住所</th>
-            <td><%= @post.address %></td>
-        </tr>
-        <tr>
-            <th>登録日時</th>
-            <td><%= @post.created_at.strftime('%Y/%m/%d') %></td>
-        </tr>
-    </table>
-
-    <!--コメント表示-->
-
-    コメント件数：<%= @post.comments.count %>
-    <% @post.comments.each do |comment| %>
-        ユーザーネーム：<%= comment.customer.last_name %><%= comment.customer.first_name %>
-        <%= comment.created_at.strftime('%Y/%m/%d') %><%= comment.comment %>
-        <%= link_to "削除", public_post_comment_path(@post, comment), method: :delete, "data-confirm" => "本当に削除しますか？" %>
+        </div>
     <% end %>
-
-    <%= link_to "編集する", edit_admin_post_path %>
-    <%= link_to "削除する", admin_post_path, method: :delete, "data-confirm" => "本当に削除しますか" %>
-    <%= link_to "戻る", admin_posts_path %>
+        </div>
+    </div>
+</div>

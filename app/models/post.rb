@@ -2,11 +2,11 @@ class Post < ApplicationRecord
   has_one_attached :image
   validates :image, presence: true
   
-  has_many :comments, dependent: :destroy
+  has_many :comments, dependent: :destroy  # Post.comments で、その投稿のコメント取得
   has_many :favorites, dependent: :destroy
 
   def favorited_by?(customer)
-    favorites.exists?(customer_id: customer.id)
+    favorites.exists?(customer_id: customer)
   end
   
   has_many :bookmarks, dependent: :destroy
@@ -15,7 +15,30 @@ class Post < ApplicationRecord
     bookmarks.where(customer_id: customer).exists?
   end
   
+  has_many :hashtags, dependent: :destroy
+  has_many :tags, through: :hashtags
   
+  after_create do
+    post = Post.find_by(id: id)
+    # hashbodyに打ち込まれたハッシュタグを検出
+    tags = introduction.scan(/[#＃][\w\p{Han}ぁ-ヶｦ-ﾟー]+/)
+    tags.uniq.map do |tag|
+      # ハッシュタグは先頭の#を外した上で保存
+      tag = Tag.find_or_create_by(name: tag.downcase.delete('#'))
+      post.tags << tag
+    end
+  end
+  #更新アクション
+  before_update do
+    post = Post.find_by(id: id)
+    post.tags.clear
+    tags = introduction.scan(/[#＃][\w\p{Han}ぁ-ヶｦ-ﾟー]+/)
+    tags.uniq.map do |tag|
+      tag = Tag.find_or_create_by(name: tag.downcase.delete('#'))
+      post.tags << tag
+    end
+  end
+
 # 検索方法分岐
   def self.looks(search, word)
     if search == "perfect_match"
@@ -25,10 +48,12 @@ class Post < ApplicationRecord
     elsif search == "backward_match"
       @post = Post.where("name LIKE?","%#{word}")
     elsif search == "partial_match"
-      @post = Post.where("name LIKE?","%#{word}%")
+      @post = Post.where("name LIKE? or introduction LIKE? or address LIKE?","%#{word}%", "%#{word}%", "%#{word}%")
     else
       @post = Post.all
     end
   end
-
+  
+  geocoded_by :address
+  after_validation :geocode
 end

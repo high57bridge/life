@@ -1,9 +1,11 @@
 <div class="container mt-2">
   <div class="row">
-    <h3>お知らせ一覧</h3>
+    <h3>お知らせ一覧</h3><h6>新着のお知らせは<%= link_to "こちら", new_public_post_path %>から</h6>
+
   </div>
-      <h4><%= link_to "新着のお知らせ", new_public_post_path %></h4>
+    <h5>現在<%= @total_post %>件の投稿があります</h5>
         <div class="d-flex justify-center flex-wrap">
+
           <% @posts.each do |post| %>
             <div class="m-3">
               <% if post.image.present? %>
@@ -11,13 +13,14 @@
                   <%= image_tag post.image, size: "200x150" %>
                 <% end %>
               <% end %>
-              <div><%= post.name %></div>
-              <div><%= post.introduction %></div>
-              <div><%= post.address %></div>
-              <div><%= post.created_at.strftime('%Y/%m/%d') %></div>
+              <div>場所：<%= post.name %></div>
+              <div>説明：<%= post.introduction %></div>
+              <div>住所：<%= post.address %></div>
+              <div>投稿日：<%= post.created_at.strftime('%Y/%m/%d') %></div>
             </div>
           <% end %>
         </div>
+    <%= paginate @posts %>
 </div>
 
-<%#= paginate @posts %>
+

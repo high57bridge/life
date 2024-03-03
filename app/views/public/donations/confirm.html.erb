@@ -10,14 +10,14 @@
             </tr>
             <tr>
               <th>寄付場所 : </th>
-              <td>石川県、富山県、新潟県</td>
+              <td><%= @donation.area %></td>
             </tr>
             <tr>
               <th>寄付金額 : </th>
               <td><%= @donation.payment_amount.to_s(:delimited) %>円</td>
             </tr>
         </table>
-        
+
         <p>※内容を変更されたい方は<%= link_to "こちら", new_public_donation_path %></p>
 
         <%= form_with model: @donation, url: public_donations_path, method: :post do |f| %>
@@ -28,7 +28,7 @@
           <div class="container mt-5">
             <div class="row">
               <div class="mx-auto">
-                <%= f.submit "お支払いを確定する" %>
+                <%= f.submit "お支払いを確定する", "data-confirm" => "確定してよろしいですか？" %>
               </div>
             </div>
           </div>

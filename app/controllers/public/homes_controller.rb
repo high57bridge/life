@@ -10,7 +10,7 @@ class Public::HomesController < ApplicationController
       flash[:notice]= "送信しました"
       redirect_to complete_path
     else
-      @homes = home.all
+      @homes = Home.all
       render :new
     end
   end

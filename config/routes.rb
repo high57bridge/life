@@ -4,7 +4,9 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resources :homes,     only: [:show, :update]
-    resources :posts,     only: [:show, :index, :edit, :new, :create, :update, :destroy]
+    resources :posts,     only: [:show, :index, :edit, :new, :create, :update, :destroy] do
+      resources :comments,  only: :destroy
+    end
     resources :customers, only: [:index, :show, :edit, :update, :destroy]
     resources :donations, only: :index
   end
@@ -18,10 +20,12 @@ Rails.application.routes.draw do
     resources :homes,     only: :create
     resources :posts,     only: [:new, :index, :show] do
       resource  :favorites, only: [:create, :destroy]
-      resources :comments,  only: [:create, :destroy]
+      resources :comments,  only: [:create, :update, :destroy]
       resource  :bookmarks, only: [:create, :destroy]
       resource  :tags,      only: [:create, :destroy]
     end
+    
+    get '/tag/:name' => 'tags#tag', as: "hashtag"
 
     resources :customers, only: :show
     resource :customers do
@@ -32,7 +36,7 @@ Rails.application.routes.draw do
       patch :unsubscribe
     end
 
-    resources :donations, only: [:index, :new, :show, :create, :update] do
+    resources :donations, only: [:index, :new, :create, :update] do
       collection do
         get  :information
         post :confirm

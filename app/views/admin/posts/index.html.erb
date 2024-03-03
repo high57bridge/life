@@ -4,6 +4,9 @@
   <i class="fas fa-plus"></i>
 <% end %>
 
+<div style="width: 100vw; height: 100vh" id="mapContainer"></div>
+    <script type="module" src="js/app.js"></script>
+
 <% @posts.each do |post| %>
   <table class="table">
     <thead>
@@ -15,13 +18,13 @@
         <th>登録日</th>
       </tr>
     </thead>
-
     <tbody>
       <tr>
         <td>
+          
           <% if post.image.present? %>
             <%= link_to admin_post_path(post) do %>
-              <%= image_tag post.image, size: "100x100" %>
+              <%= image_tag post.image, size: "250x200" %>
             <% end %>
           <% end %>
         </td>

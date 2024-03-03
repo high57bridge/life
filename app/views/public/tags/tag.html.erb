@@ -1,0 +1,14 @@
+<h4>ハッシュタグ</h4><h5>#<%= @tag.name %></h5>
+
+    <% @posts.each do |post| %>
+      <div>
+        <%= link_to public_post_path(post.id) do %>
+          <%= image_tag post.image.variant(gravity: :center, resize:"200x250^", crop:"200x250+0+0") if post.image.attached? %>
+        <% end %>
+      </div>
+      <div><%= post.name %></div>
+      <div><%= post.introduction %></div>
+      <div><%= post.address %></div>
+      <div><%= post.created_at.strftime('%Y/%m/%d') %></div>
+    <% end %>
+

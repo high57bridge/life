@@ -1,16 +1,23 @@
 class Public::CommentsController < ApplicationController
-  
+
+  def update
+    @comment = current_customer.comments.find(params[:id])
+    @comment.reload unless @comment.update(comment_params)
+    @post = @comment.post
+  end
+
   def create
-       @post = Post.find(params[:post_id])
-       @comment = @post.comments.create(comment_params)
+    @post = Post.find(params[:post_id])
+    @comment = @post.comments.create(comment_params)
+    @comment.customer_id = current_customer.id
     if @comment.save
-      redirect_to public_post_path(@post) notice: 'コメントしました'
+      redirect_to public_post_path(@post), notice: 'コメントしました'
     else
       flash.now[:alert] = 'コメントに失敗しました'
-      render public_post_path(@post)
+      render "public/posts/show"
     end
   end
-  
+
   def destroy
        @post = Post.find(params[:post_id])
        @comment = Comment.find(params[:id])
@@ -18,14 +25,13 @@ class Public::CommentsController < ApplicationController
       redirect_to public_post_path(@post), notice: 'コメントを削除しました'
     else
       flash.now[:alert] = 'コメント削除に失敗しました'
-      render public_post_path(@post)
+      render "public/posts/show"
     end
   end
 
-  private
+private
 
   def comment_params
-    params.require(:comment).permit(:post_id, :customer_id, :comment)
+    params.require(:comment).permit(:customer_id, :post_id, :comment)
   end
-  
 end
