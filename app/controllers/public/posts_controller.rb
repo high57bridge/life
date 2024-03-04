@@ -16,7 +16,7 @@ class Public::PostsController < ApplicationController
   end
 
   def index
-       @posts = Post.page(params[:page]).per(5)
+       @posts = Post.page(params[:page]).per(5)   # ぺージネーション機能で5つずつ投稿を表示するため
        @tag_lists = Tag.all
        @total_post = Post.count   # 何件投稿されているか確認するため
     if params[:search].present?   #検索フォームに入力があった場合
@@ -32,6 +32,7 @@ class Public::PostsController < ApplicationController
   def show
     @post = Post.find(params[:id])
     @comment = Comment.new     # フォーム用のインスタンス作成(コメント追加用)
+    @comment_reply = @post.comments.build   #コメントに対する返信用の変数
   end
 
   def new
@@ -51,11 +52,5 @@ class Public::PostsController < ApplicationController
       render :new
     end
   end
-
-  # def tag
-  #   @customer = current_customer
-  #   @tag = Tag.find_by(name: params[:name])
-  #   @posts = @tag.posts
-  # end
 
 end

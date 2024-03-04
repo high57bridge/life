@@ -22,7 +22,7 @@ Rails.application.routes.draw do
       resource  :favorites, only: [:create, :destroy]
       resources :comments,  only: [:create, :update, :destroy]
       resource  :bookmarks, only: [:create, :destroy]
-      resource  :tags,      only: [:create, :destroy]
+      resource  :tags,      only: [:create]
     end
     
     get '/tag/:name' => 'tags#tag', as: "hashtag"

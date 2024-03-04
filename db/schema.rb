@@ -64,9 +64,13 @@ ActiveRecord::Schema.define(version: 2024_02_29_110949) do
   create_table "comments", force: :cascade do |t|
     t.integer "customer_id", null: false
     t.integer "post_id", null: false
+    t.integer "parent_id", null: false
     t.text "comment", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["customer_id"], name: "index_comments_on_customer_id"
+    t.index ["parent_id"], name: "index_comments_on_parent_id"
+    t.index ["post_id"], name: "index_comments_on_post_id"
   end
 
   create_table "customers", force: :cascade do |t|
