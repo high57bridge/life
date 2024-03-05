@@ -36,7 +36,11 @@
       <th>メールアドレス</th>
       <td><%= f.text_field :email, autofocus: true %></td>
     </tr>
+    
     <tr>
+      <th>自治体名</th>
+      <td><%= f.text_field :municipality_name, autofocus: true %></td>
+    </tr>
       <th>会員ステータス</th>
       <td>
         <%= f.radio_button :is_active, true %>

@@ -58,63 +58,6 @@
     </p>
 <% end %>
 
-    <input type="text" readonly class="form-control show-form" value="<%#= @post.name %>">
-    <div id="comments_area">
-      
-        
-      
-    </div>
-
-
-
-<!--コメント表示-->
-コメント件数：<%= @post.comments.count %>
-    <% @post.comments.each do |comment| %>
-        <div style="width:55%" class="border-info border rounded m-1">
-            <div class="d-flex justify-center flex-wrap">
-                <% if comment.parent_id.present? || comment.id.blank? %>
-                <% if comment.customer.present? %>
-                <p class="font-weight-bold mr-2">  <!--投稿者のIDと名前-->
-                    [<%= comment.customer.id %>]<%= comment.customer.last_name %><%= comment.customer.first_name %>
-                </p>
-                <%= comment.created_at.strftime('%Y/%m/%d %H:%M') %>  <!--投稿日時-->
-                
-                <% end %>
-                <% end %>
-            <!--ログインしている本人のみ操作できるようにするための分岐-->
-                <% if customer_signed_in? && (current_customer == comment.customer) %>
-                    <!--コメント削除には、@post（親）, @commentsのc に渡す必要がある-->
-                    <span data-comment-id=<%= comment.id %> class="js-edit-comment-button" >
-                        <i class="fa-solid fa-pen-to-square ml-2 text-success"></i> 編集
-                    </span>
-
-                    <%= link_to public_post_comment_path(@post, comment), method: :delete, "data-confirm" => "本当に削除しますか？", class: 'text-danger' do %>
-                        <i class="fa-solid fa-trash ml-2"></i> 削除
-                    <% end %>
-
-                    <div id="js-comment-<%= comment.id %>">
-                        <%= render "public/comments/js_comment", comment: comment %>
-                    </div>
-                <% end %>
-        <!--コメント返信-->
-                <%= form_with(model:[@post,@comment_reply]), url: public_post_comments_path do |f| %>
-        <div class="row">
-          <div class="form-group col-md-6">
-            <p><label>Reply</label></p>
-            <textarea class="form-control input-form" name="comment[comment]" rows="2"><%=@comment_reply.comment %></textarea>
-          </div>
-        </div>
-          <%= f.hidden_field :post_id, value: @post.id %>
-          <%= f.hidden_field :parent_id, value: comment.id %>
-        <div class="actions">
-          <%= f.submit %>
-        </div>
-      <% end %>
-   
-            </div>
-        </div>
-    <% end %>
-
 <!--コメント投稿-->
     <div class="mt-2">
         <%= form_with model: [@post, @comment], url: public_post_comments_path(@post) do |f| %>  <!--comment は、postに紐づくので、配列で書く-->
@@ -122,6 +65,54 @@
             <%= f.submit "投稿" %>
         <% end %>
     </div>
+
+<!--コメント表示-->
+コメント件数：<%= @post.comments.count %>
+    <% @post.comments.where(reply_comment:nil).each do |comment| %>
+        <div style="width:55%" class="border-info border rounded m-1">
+            <div class="d-flex justify-center flex-wrap">
+                <p class="font-weight-bold mr-2">  <!--投稿者のIDと名前-->
+                    [<%= comment.customer.id %>]
+                    <%= comment.customer.last_name %><%= comment.customer.first_name %>
+                </p>
+                <div id="js-comment-<%= comment.id %>">  <!--投稿コメント-->
+                    <%= render "public/comments/js_comment", comment: comment %>
+                </div>
+             </div>
+                    <%= comment.created_at.strftime('%Y/%m/%d %H:%M') %>  <!--投稿日時-->
+
+            <!--ログインしている本人のみ操作できるようにするための分岐-->
+            <% if customer_signed_in? && (current_customer == comment.customer) %>
+                <!--コメント削除には、@post（親）, @commentsのc に渡す必要がある-->
+                <span data-comment-id=<%= comment.id %> class="js-edit-comment-button" >
+                    <i class="fa-solid fa-pen-to-square ml-2 text-success"></i> 編集
+                </span>
+
+                <%= link_to public_post_comment_path(@post, comment), method: :delete, "data-confirm" => "本当に削除しますか？", class: 'text-danger' do %>
+                    <i class="fa-solid fa-trash ml-2"></i> 削除
+                <% end %>
+            <% end %>
+        </div>
+
+<!--コメントへの返信を表示-->
+    -----返信コメント-----<br>
+    <% Comment.where(reply_comment: comment.id).each  do |reply_comment| %>
+        <%= comment.comment %>
+    <% end %>
+
+<!--コメントに対して返信-->
+    <%= form_with model: [@post, @comment], url: public_post_comments_path(@post) do |f| %>
+        <div class="collapsible-body">
+            <%= f.text_field :comment %>
+            <!--ここ大事！hidden_fieldでフォーム無しに送信先コメントのidをreply_commentに追加-->
+            <%= f.hidden_field :reply_comment, :value => comment.id  %>
+            <%= button_tag type:"submit", class: "waves-effect waves-light btn" do %>
+                <%= f.submit "返信する" %>
+            <% end %>
+        </div>
+    <% end %>
+<% end %>
+
         <%= link_to "前のページに戻る", public_posts_path, class: 'btn btn-info'  %>
         </div>
     </div>

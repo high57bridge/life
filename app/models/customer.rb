@@ -6,8 +6,8 @@ class Customer < ApplicationRecord
 
         has_many :posts, dependent: :destroy
         has_many :donations, dependent: :destroy
-        has_many :comments, dependent: :destroy  # Customer.comments で、ユーザーのコメント取得
         has_many :favorites, dependent: :destroy
         has_many :bookmarks, dependent: :destroy
+        has_many :comments, dependent: :destroy  # Customer.comments で、ユーザーのコメント取得
 
 end

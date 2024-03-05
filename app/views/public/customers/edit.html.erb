@@ -2,37 +2,37 @@
 <%= form_with model: @customer, url: information_public_customers_path do |f| %>
 <table>
   <tr>
-    <td><%= f.label :氏名 %></td>
+    <th><%= f.label :氏名 %></th>
     <td>
       <%= f.text_field :last_name, autofocus: true, id:"inputName" %>
       <%= f.text_field :first_name, autofocus: true, id:"inputName" %>
     </td>
   </tr>
   <tr>
-    <td><%= f.label :フリガナ %></td>
+    <th><%= f.label :フリガナ %></th>
     <td>
       <%= f.text_field :last_name_kana, autofocus: true, id:"inputName" %>
       <%= f.text_field :first_name_kana, autofocus: true, id:"inputName" %>
     </td>
   </tr>
   <tr>
-    <td><%= f.label :郵便番号 %></td>
+    <th><%= f.label :郵便番号 %></th>
     <td><%= f.text_field :postal_code, autofocus: true %></td>
   </tr>
   <tr>
-    <td><%= f.label :住所 %></td>
+    <th><%= f.label :住所 %></th>
     <td><%= f.text_field :address, autofocus: true %></td>
   </tr>
   <tr>
-    <td><%= f.label :電話番号 %></td>
+    <th><%= f.label :電話番号 %></th>
     <td><%= f.text_field :telephone_number, autofocus: true %></td>
   </tr>
   <tr>
-    <td><%= f.label :メールアドレス %></td>
+    <th><%= f.label :メールアドレス %></th>
     <td><%= f.text_field :email, autofocus: true, autocomplete: "email" %></td>
   </tr>
   <tr>
-    <td><%= f.label :自治体 %></td>
+    <th><%= f.label :自治体 %></th>
     <td><%= f.text_field :municipality_name, autofocus: true %></td>
   </tr>
 </table>
