@@ -84,15 +84,16 @@
 
 <!--コメント表示-->
 コメント件数：<%= @post.comments.count %>
-    <% @post.comments.each do |c| %>
+    <% @post.comments.each do |comment| %>
         <div style="width:55%" class="border-info border rounded">
             <p class="font-weight-bold">  <!--投稿者のIDと名前-->
-                [<%= c.customer.id %>]<%= c.customer.last_name %><%= c.customer.first_name %>
+                [<%= comment.customer.id %>]
+                <%= comment.customer.last_name %><%= comment.customer.first_name %>
             </p>
-                <%= simple_format(c.comment) %>   <!--改行ありで表示-->
-                <%= c.created_at.strftime('%Y/%m/%d %H:%M') %>  <!--投稿日時-->
+                <%= simple_format(comment.comment) %>   <!--改行ありで表示-->
+                <%= comment.created_at.strftime('%Y/%m/%d %H:%M') %>  <!--投稿日時-->
                 <!--コメント削除には、@post（親）, @commentsのc に渡す必要がある-->
-                <%= link_to admin_post_comment_path(@post, c), method: :delete, "data-confirm" => "本当に削除しますか？", class: 'text-danger' do %>
+                <%= link_to admin_post_comment_path(@post, comment), method: :delete, "data-confirm" => "本当に削除しますか？", class: 'text-danger' do %>
                     <i class="fa-solid fa-trash"></i> 削除
                 <% end %>
         </div>

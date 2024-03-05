@@ -33,6 +33,8 @@ class Public::PostsController < ApplicationController
     @post = Post.find(params[:id])
     @comment = Comment.new     # フォーム用のインスタンス作成(コメント追加用)
     @comment_reply = @post.comments.build   #コメントに対する返信用の変数
+    @comments = Comment.includes(:customer).where(post_id: @post.id)
+
   end
 
   def new

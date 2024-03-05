@@ -3,14 +3,14 @@ class Post < ApplicationRecord
   validates :image, presence: true
   
   has_many :comments, dependent: :destroy  # Post.comments で、その投稿のコメント取得
+  has_many :replies, class_name: "Comment", foreign_key: :reply_comment, dependent: :destroy
+  
   has_many :favorites, dependent: :destroy
-
   def favorited_by?(customer)
     favorites.exists?(customer_id: customer)
   end
   
   has_many :bookmarks, dependent: :destroy
-
   def bookmarked_by?(customer)
     bookmarks.where(customer_id: customer).exists?
   end

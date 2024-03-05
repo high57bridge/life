@@ -1,5 +1,6 @@
 class Admin::DonationsController < ApplicationController
-
+  before_action :authenticate_admin!
+  
   def index
     @donations = Donation.all
     @total = 0
