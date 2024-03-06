@@ -25,7 +25,7 @@ class Public::PostsController < ApplicationController
       @tag = Tag.find(params[:tag_id])
       @posts = @tag.posts.order(created_at: :desc)
     else
-      @posts = Post.all.order(created_at: :desc).page(params[:page]).per(10)   #普通にページを表示させた場合
+      @posts = Post.all.order(created_at: :desc).page(params[:page]).per(5)   #普通にページを表示させた場合
     end
   end
 

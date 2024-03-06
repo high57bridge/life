@@ -54,6 +54,4 @@ class Post < ApplicationRecord
     end
   end
   
-  geocoded_by :address
-  after_validation :geocode
 end

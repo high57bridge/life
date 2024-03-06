@@ -17,12 +17,13 @@ Rails.application.routes.draw do
 
   namespace :public do
     get "search" => "searches#search"
-    resources :homes,     only: :create
-    resources :posts,     only: [:new, :index, :show] do
+    resources :homes,       only: :create
+    resources :posts,       only: [:new, :index, :show] do
       resource  :favorites, only: [:create, :destroy]
       resources :comments,  only: [:create, :update, :destroy]
       resource  :bookmarks, only: [:create, :destroy]
-      resource  :tags,      only: [:create]
+      resource  :tags,      only: :create
+      resources :maps,      only: [:index, :show]
     end
     
     get '/tag/:name' => 'tags#tag', as: "hashtag"
