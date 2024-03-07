@@ -10,10 +10,7 @@ class Post < ApplicationRecord
     favorites.exists?(customer_id: customer)
   end
   
-  has_many :bookmarks, dependent: :destroy
-  def bookmarked_by?(customer)
-    bookmarks.where(customer_id: customer).exists?
-  end
+  has_many :notifications, dependent: :destroy
   
   has_many :hashtags, dependent: :destroy
   has_many :tags, through: :hashtags

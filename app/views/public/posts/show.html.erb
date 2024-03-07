@@ -2,9 +2,9 @@
     <div class="row">
         <div class="col-md-8">
             <h3>お知らせ詳細画面</h3>
-                <div class="font-weight-bold">避難場所の地図検索</div>
+                <div class="font-weight-bold">地図検索</div>
                     <input id="address" type="textbox" value="GeekSalon">
-                    <input type="button" value="検索" onclick="codeAddress()">  ※下記に記載されている住所を、左のバーで検索してください。
+                    <input type="button" value="検索" onclick="codeAddress()">  ※下記に記載されている住所を<図上のバーで検索してください。
                         <div id="display">検索結果が表示されます</div>
                             <div id='map'></div>
 
@@ -60,51 +60,35 @@
                             <div><%= @post.name %></div>
                     </div>
                     <div class="d-flex justify-center flex-wrap">
-                        <div class="font-weight-bold"><i class="fa-solid fa-house text-danger"></i>避難場所に関しての説明：</div>
+                        <div class="font-weight-bold"><i class="fa-solid fa-house text-danger"></i>説明：</div>
                             <div><%= render_with_tags(@post.introduction) %></div>
                     </div>
                      <div class="d-flex justify-center flex-wrap">
-                        <div class="font-weight-bold">避難場所の住所:：</div>
+                        <div class="font-weight-bold">の住所：</div>
                             <div><%= @post.address %></div>
                     </div>
                     <div class="d-flex justify-center flex-wrap">
-                        <div class="font-weight-bold">登録日時：</div>
+                        <div class="font-weight-bold">登録日：</div>
                             <div><%= @post.created_at.strftime('%Y/%m/%d') %></div>
                     </div>
 <!--いいね表示-->
-<div class="d-flex justify-center flex-wrap mt-2">
+<div class="mt-2">
     <% if @post.favorited_by?(current_customer) %>
         <p>  <!--いいね作成-->
-          <%= link_to public_post_favorites_path(@post), method: :delete do %>
-            <i class="fa-solid fa-heart"></i><%= @post.favorites.count %> いいね
+          <%= link_to public_post_favorites_path(@post), method: :delete, class: 'text-danger' do %>
+            <i class="fa-solid fa-heart"></i><%= @post.favorites.count %> いいね（ブックマーク）
           <% end %>
         </p>
         <% else %>
         <p>  <!--いいね削除-->
-          <%= link_to public_post_favorites_path(@post), method: :post do %>
-            <i class="fa-regular fa-heart"></i><%= @post.favorites.count %> いいね
+          <%= link_to public_post_favorites_path(@post), method: :post, class: 'text-dark' do %>
+            <i class="fa-regular fa-heart"></i><%= @post.favorites.count %> いいね（ブックマーク）
           <% end %>
         </p>
     <% end %>
 
 
-<!--ブックマーク表示-->
-    <div class="ml-2">
-        <% if @post.bookmarked_by?(current_customer) %>
-            <p>  <!--ブックマーク作成-->
-                <%= link_to public_post_bookmarks_path(@post), method: :delete do %>
-                    <i class="fa-solid fa-bookmark"></i><%= @post.bookmarks.count %> ブックマーク
-                <% end %>
-            </p>
-                <% else %>
-            <p>  <!--ブックマーク削除-->
-                <%= link_to public_post_bookmarks_path(@post), method: :post do %>
-                    <i class="fa-regular fa-bookmark"></i><%= @post.bookmarks.count %> ブックマーク
-                <% end %>
-            </p>
-        <% end %>
-    </div>
-</div>
+
 
 <!--コメント投稿-->
     <div class="mt-2">
@@ -161,7 +145,6 @@
     <% end %>
 <% end %>
 
-        <%= link_to "前のページに戻る", public_posts_path, class: 'btn btn-info'  %>
         </div>
     </div>
 </div>

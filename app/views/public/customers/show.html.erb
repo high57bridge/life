@@ -38,26 +38,26 @@
         </table>
       <%= link_to "編集する", information_edit_public_customers_path, class: 'btn btn-success' %>
 
-      <h4><i class="fa-solid fa-bookmark mt-2"></i>ブックマーク一覧</h4>
+      <h4><i class="fa-solid fa-bookmark mt-2"></i>いいね（ブックマーク）一覧</h4>
         <table class="table">
           <thead>
             <tr>
               <th>避難場所</th>
-              <th>避難場所に関しての説明</th>
-              <th>避難場所の住所</th>
+              <th>説明</th>
+              <th>住所</th>
             </tr>
           </thead>
 
           <tbody>
-            <% @bookmarks.each do |bookmark| %>
+            <% @favorites.each do |favorite| %>
               <tr>
                 <td>
-                  <%= link_to public_post_path(bookmark.post) do %>
-                    <%= bookmark.post.name %>
+                  <%= link_to public_post_path(favorite.post) do %>
+                    <%= favorite.post.name %>
                   <% end %>
                 </td>
-                <td><%= bookmark.post.introduction %></td>
-                <td><%= bookmark.post.address %></td>
+                <td><%= favorite.post.introduction %></td>
+                <td><%= favorite.post.address %></td>
               </tr>
             <% end %>
           </tbody>

@@ -21,7 +21,6 @@ Rails.application.routes.draw do
     resources :posts,       only: [:new, :index, :show] do
       resource  :favorites, only: [:create, :destroy]
       resources :comments,  only: [:create, :update, :destroy]
-      resource  :bookmarks, only: [:create, :destroy]
       resource  :tags,      only: :create
       resources :maps,      only: [:index, :show]
     end
