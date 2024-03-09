@@ -49,15 +49,15 @@
           </thead>
 
           <tbody>
-            <% @favorites.each do |favorite| %>
+            <% @likes.each do |like| %>
               <tr>
                 <td>
-                  <%= link_to public_post_path(favorite.post) do %>
-                    <%= favorite.post.name %>
+                  <%= link_to public_post_path(like.post) do %>
+                    <%= like.post.name %>
                   <% end %>
                 </td>
-                <td><%= favorite.post.introduction %></td>
-                <td><%= favorite.post.address %></td>
+                <td><%= like.post.introduction %></td>
+                <td><%= like.post.address %></td>
               </tr>
             <% end %>
           </tbody>

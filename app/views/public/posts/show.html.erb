@@ -4,11 +4,16 @@
             <h3>お知らせ詳細画面</h3>
                 <div class="font-weight-bold">地図検索</div>
                     <input id="address" type="textbox" value="GeekSalon">
-                    <input type="button" value="検索" onclick="codeAddress()">  ※下記に記載されている住所を<図上のバーで検索してください。
+                    <input type="button" value="Encode" onclick="codeAddress()">  ※下記に記載されている住所を地図上のバーで検索してください。
                         <div id="display">検索結果が表示されます</div>
                             <div id='map'></div>
 
-                            <style>#map { height: 400px; width: 500px;}</style>
+                            <style>
+                                #map {
+                                  height: 400px;
+                                  width: 500px;
+                                }
+                            </style>
 
                             <script>
                                 let map
@@ -54,7 +59,7 @@
                                 }
                             </script>
                             <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDZc0kt_YOoE9NQucQ3rfwtMT58W4xullY&callback=initMap" async defer></script>
-            
+
                     <div class="d-flex justify-center flex-wrap">
                         <div class="font-weight-bold"><i class="fa-solid fa-person-running text-danger"></i>避難場所：</div>
                             <div><%= @post.name %></div>
@@ -73,22 +78,19 @@
                     </div>
 <!--いいね表示-->
 <div class="mt-2">
-    <% if @post.favorited_by?(current_customer) %>
+    <% if @post.liked_by?(current_customer) %>
         <p>  <!--いいね作成-->
-          <%= link_to public_post_favorites_path(@post), method: :delete, class: 'text-danger' do %>
-            <i class="fa-solid fa-heart"></i><%= @post.favorites.count %> いいね（ブックマーク）
+          <%= link_to public_post_likes_path(@post), method: :delete, class: 'text-danger' do %>
+            <i class="fa-solid fa-heart"></i><%= @post.likes.count %> いいね（ブックマーク）
           <% end %>
         </p>
         <% else %>
         <p>  <!--いいね削除-->
-          <%= link_to public_post_favorites_path(@post), method: :post, class: 'text-dark' do %>
-            <i class="fa-regular fa-heart"></i><%= @post.favorites.count %> いいね（ブックマーク）
+          <%= link_to public_post_likes_path(@post), method: :post, class: 'text-dark' do %>
+            <i class="fa-regular fa-heart"></i><%= @post.likes.count %> いいね（ブックマーク）
           <% end %>
         </p>
     <% end %>
-
-
-
 
 <!--コメント投稿-->
     <div class="mt-2">

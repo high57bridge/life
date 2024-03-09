@@ -1,0 +1,38 @@
+<% visitor %> <% notification.visitor %>
+<% visited %> <% notification.visited %>
+<div class"col md-6 mx-auto" ></div>
+  <div class"form-inline" ></div>
+
+    <span>
+      <%= link_to public_customer_path(visitor) do %>
+        <% image_tag avatar_url(visitor).to_s, class: "icon_mini" %>
+        
+        <strong>
+          <% visitor.name %>さんが
+
+            <% case notification.action %>
+              <% when 'like' then %>
+                <div class="font-weight-bold">
+                  <%= link_to 'あなたの投稿', public_post_notifications_path %>にいいねしました
+                </div>
+              <% when 'comment' then %>
+                <% if notification.post.customer_id %> <%= visited.id %>
+                  <div class="font-weight-bold">
+                    <%= link_to "あなたの投稿", public_post_notifications_path %>
+                  </div>
+              <% else %>
+    </span>
+            <%= link_to post_path(notification.post) do %>
+              <%= image_tag avatar_url(notification.post.customer).to_s, class: "icon_mini" %>
+        </strong>
+        
+          <%= notification.post.customer.last_name %>
+          <%= notification.post.customer.first_name %>さんの投稿にコメントしました
+                
+        <p class="text-muted mb-0">
+          <% Comment.find_by(id: notification.comment_id)&.comment %>
+        </p>
+
+  <div class="small text-muted text-right">
+    <%= time_ago_in_words(notification.created_at).upcase %>
+  </div>

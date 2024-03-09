@@ -5,12 +5,30 @@ class Post < ApplicationRecord
   has_many :comments, dependent: :destroy  # Post.comments で、その投稿のコメント取得
   has_many :replies, class_name: "Comment", foreign_key: :reply_comment, dependent: :destroy
   
-  has_many :favorites, dependent: :destroy
-  def favorited_by?(customer)
-    favorites.exists?(customer_id: customer)
+  has_many :likes, dependent: :destroy
+  def liked_by?(customer)
+    likes.exists?(customer_id: customer)
   end
   
   has_many :notifications, dependent: :destroy
+  
+  def create_notification_like!(current_customer)
+    # すでに「いいね」されているか検索
+    temp = Notification.where(["visitor_id = ? and visited_id = ? and post_id = ? and action = ? ", current_customer.id, customer_id, id, 'like'])
+    # いいねされていない場合のみ、通知レコードを作成
+    if temp.blank?
+      notification = current_customer.active_notifications.new(
+        post_id: id,
+        visited_id: customer_id,
+        action: 'like'
+      )
+      # 自分の投稿に対するいいねの場合は、通知済みとする
+      if notification.visitor_id == notification.visited_id
+        notification.checked = true
+      end
+      notification.save if notification.valid?
+    end
+  end
   
   has_many :hashtags, dependent: :destroy
   has_many :tags, through: :hashtags
