@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_03_07_131033) do
+ActiveRecord::Schema.define(version: 2024_03_09_115048) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -100,14 +100,6 @@ ActiveRecord::Schema.define(version: 2024_03_07_131033) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "favorites", force: :cascade do |t|
-    t.integer "customer_id"
-    t.integer "post_id"
-    t.string "favorite"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
   create_table "hashtags", force: :cascade do |t|
     t.integer "post_id", null: false
     t.integer "tag_id", null: false
@@ -122,6 +114,14 @@ ActiveRecord::Schema.define(version: 2024_03_07_131033) do
     t.string "email", null: false
     t.text "opinion", null: false
     t.boolean "is_active"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "likes", force: :cascade do |t|
+    t.integer "customer_id"
+    t.integer "post_id"
+    t.string "like"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -150,6 +150,11 @@ ActiveRecord::Schema.define(version: 2024_03_07_131033) do
     t.string "name", null: false
     t.text "introduction", null: false
     t.string "address", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "public_notifications", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
