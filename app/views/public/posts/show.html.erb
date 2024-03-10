@@ -2,6 +2,8 @@
     <div class="row">
         <div class="col-md-8">
             <h3>お知らせ詳細画面</h3>
+            <%= @read ? '既読' : '未読' %>
+
                 <div class="font-weight-bold">地図検索</div>
                     <input id="address" type="textbox" value="GeekSalon">
                     <input type="button" value="Encode" onclick="codeAddress()">  ※下記に記載されている住所を地図上のバーで検索してください。

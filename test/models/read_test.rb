@@ -1,6 +1,6 @@
 require "test_helper"
 
-class Public::NotificationTest < ActiveSupport::TestCase
+class ReadTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end
