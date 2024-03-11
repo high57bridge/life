@@ -22,10 +22,10 @@
       </tr>
       <tr>
         <td>ご意見・ご質問内容</td>
-        <td><%= f.text_area :opinion, autofocus: true %></td>
+        <td><%= f.text_area :opinion, autofocus: true, size: "25x5" %></td>
       </tr>
     </table>
-    <%= f.submit "送信" %>
+    <%= f.submit "送信", class: "btn btn-primary" %>
     <% end %>
   </div>
 </div>
