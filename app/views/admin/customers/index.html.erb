@@ -1,9 +1,12 @@
 <div class="container mt-2">
   <div class="row">
-      <h3>会員一覧</h3>
-        <table class="table">
+    <div class="col-md-8">
+      <h3>会員一覧</h3> 
+      <p>顧客の氏名をクリックすると詳細確認画面へ遷移します。</p>
+    </div>
+        <table bordercolor="black" class="table" border="1" >
           <thead>
-            <tr>
+            <tr  bgcolor="coral">
               <th>会員ID</th>
               <th>氏名</th>
               <th>フリガナ</th>
@@ -19,7 +22,7 @@
             <tr>
               <td><%= customer.id %></td>
               <td>
-                <%= link_to admin_customer_path(customer) do %>
+                <%= link_to admin_customer_path(customer), class: "text-dark" do %>
                   <%= customer.last_name %><%= customer.first_name %>
                 <% end %>
               </td>

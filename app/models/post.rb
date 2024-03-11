@@ -1,6 +1,8 @@
 class Post < ApplicationRecord
   has_one_attached :image
   validates :image, presence: true
+  validates :name, presence: true
+  validates :introduction, presence: true
   
   has_many :comments, dependent: :destroy  # Post.comments で、その投稿のコメント取得
   has_many :replies, class_name: "Comment", foreign_key: :reply_comment, dependent: :destroy
