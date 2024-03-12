@@ -18,7 +18,7 @@ Rails.application.routes.draw do
   namespace :public do
     get "search" => "searches#search"
     resources :homes,       only: :create
-    resources :posts,       only: [:index, :show] do
+    resources :posts,       only: [:index, :show, :new] do
       resource  :likes, only: [:create, :destroy]
       resources :notifications, only: :index
       resources :comments,  only: [:create, :update, :destroy]

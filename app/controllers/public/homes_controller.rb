@@ -11,7 +11,7 @@ class Public::HomesController < ApplicationController
       redirect_to complete_path
     else
       @homes = Home.all
-      render :new
+      render "public/homes/about"
     end
   end
 

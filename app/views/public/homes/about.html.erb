@@ -9,11 +9,20 @@
       ご意見やご質問等がございましたら<br>
       お気軽に下記のフォームからご送付ください。<br>
     </h3>
-
+    
+    <% if @home.errors.any? %>
+        <%= @home.errors.count %>件のエラーが発生しました
+      <ul>
+        <% @home.errors.full_messages.each do |message| %>
+          <div><%= message %></div>
+        <% end %>
+      </ul>
+      <% end %>
+      
     <%= form_with model: @home, url: public_homes_path do |f| %>
     <table class="table">
       <tr>
-        <td>お名前</td>
+        <td>氏名</td>
         <td><%= f.text_field :name, autofocus: true %></td>
       </tr>
       <tr>

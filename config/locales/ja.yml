@@ -12,6 +12,15 @@ ja:
         restrict_dependent_destroy:
           has_one: "%{record}が存在しているので削除できません"
           has_many: "%{record}が存在しているので削除できません"
+    attributes:
+      post:
+        name: "名前"
+        introduction: "説明"
+        image: "画像"
+      home:
+        name: "氏名"
+        opinion: "ご意見またはご質問"
+        email: "メールアドレス"
   date:
     abbr_day_names:
     - 日
@@ -93,7 +102,7 @@ ja:
       accepted: を受諾してください
       blank: を入力してください
       confirmation: と%{attribute}の入力が一致しません
-      empty: を入力してください
+      empty: を選択してください
       equal_to: は%{count}にしてください
       even: は偶数にしてください
       exclusion: は予約されています
