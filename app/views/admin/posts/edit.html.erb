@@ -6,7 +6,7 @@
         <%= form_with model: @post, url: admin_post_path do |f| %>
         <table class="table">
           <tr>
-            <th>避難場所の画像・地図</th>
+            <th>画像・地図</th>
             <td><%= f.file_field :image, accept: "image*/" %></td>
           </tr>
           
@@ -16,12 +16,12 @@
           </tr>
           
           <tr>
-            <th>避難場所に関しての説明</th>
-            <td><%= f.text_area :introduction %></td>
+            <th>説明</th>
+            <td><%= f.text_area :introduction, size: "25x4" %></td>
           </tr>
           
           <tr>
-            <th>避難場所の住所</th>
+            <th>住所</th>
             <td><%= f.text_field :address %></td>
           </tr>
         </table>

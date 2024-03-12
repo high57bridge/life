@@ -7,7 +7,7 @@
         <%= @post.errors.count %>件のエラーが発生しました
       <ul>
         <% @post.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
+          <div><%= message %></div>
         <% end %>
       </ul>
       <% end %>

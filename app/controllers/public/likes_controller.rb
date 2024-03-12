@@ -1,7 +1,6 @@
 class Public::LikesController < ApplicationController
 
   def create
-    # @post = @like.post
     post = Post.find(params[:post_id])
     like = current_customer.likes.new(post_id: post.id)
     like.save
