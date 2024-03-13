@@ -113,7 +113,7 @@ ActiveRecord::Schema.define(version: 2024_03_10_133429) do
     t.string "name", null: false
     t.string "email", null: false
     t.text "opinion", null: false
-    t.boolean "is_active"
+    t.boolean "is_active", default: true, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -145,6 +145,9 @@ ActiveRecord::Schema.define(version: 2024_03_10_133429) do
   end
 
   create_table "reads", force: :cascade do |t|
+    t.integer "customer_id", null: false
+    t.integer "post_id", null: false
+    t.boolean "complete", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

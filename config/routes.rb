@@ -28,11 +28,11 @@ Rails.application.routes.draw do
     
     get '/tag/:name' => 'tags#tag', as: "hashtag"
 
-    resources :customers, only: :show
+    # resources :customers, only: :show
     resource :customers do
       get   :mypage, action: :show
       get   "information/edit", action: :edit
-      get   :withdrawal
+      get   :withdrawal, action: :withdrawal
       patch :information, action: :update
       patch :unsubscribe
     end

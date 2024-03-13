@@ -1,18 +1,19 @@
-<h3>検索結果</h3>
-
-<table class="table table-hover table-inverse">
-  <% @range == "Post" %>
-    <!--検索対象モデルがPost -->
-    <thead>
-      <tr>
-        <th>画像・地図</th>
-        <th>場所</th>
-        <th>説明</th>
-        <th>住所</th>
-        <th>投稿日</th>
-      </tr>
-    </thead>
-      <% @posts.each do |post| %>
+<div class="container mt-2">
+  <div class="row">
+    <h3>検索結果</h3><p class="ml-3">※下記の画像を押すと、詳細ページに進みます</p>
+    <table border="1" cellpadding="5" style="width:100%">
+      <% @range == "Post" %>
+      <!--検索対象モデルがPost -->
+      <thead>
+        <tr>
+          <th class="table-secondary">画像</th>
+          <th class="table-secondary">場所</th>
+          <th class="table-secondary">説明</th>
+          <th class="table-secondary">住所</th>
+          <th class="table-secondary">投稿日</th>
+        </tr>
+      </thead>
+    <% @posts.each do |post| %>
       <tbody>
         <tr>
           <td>
@@ -28,7 +29,7 @@
           <td><%= post.created_at.strftime('%Y/%m/%d') %></td>
         </tr>
       </tbody>
-      <% end %>
-</table>
-
-<div>※上記の画像・地図を押すと、詳細ページに進みます</div>
+    <% end %>
+    </table>
+  </div>
+</div>

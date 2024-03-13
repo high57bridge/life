@@ -1,9 +1,9 @@
 <div class="container mt-2">
   <div class="row">
     <div class="col-md-8">
-      <h2>情報入力</h2>
+      <h3>情報入力</h3>
 
-      <h5 class="font-weight-bold">支払方法</h5>
+      <h5 class="font-weight-bold table-secondary" style="width:20%">支払方法</h5>
 
       <%= form_with model: @donation, url: confirm_public_donations_path do |f| %>
         <%= f.radio_button :payment_method, Donation.payment_methods.key(0), checked: "checked" %>
@@ -15,8 +15,8 @@
         <%= f.radio_button :payment_method, Donation.payment_methods.key(2) %>
         <%= f.label :payment_method_paypay, Donation.payment_methods_i18n[:paypay]%>
 
-        <h5 class="font-weight-bold">寄付場所</h5>
-        <h5>義援金をお届けする県は下記から選択してください</h5>
+        <h5 class="font-weight-bold table-secondary" style="width:20%">寄付場所</h5>
+        <h6>義援金をお届けする県を下記から選択してください</h6>
 
           <%= f.radio_button :area, "石川県", checked: "checked" %>
           <%= f.label :area, "石川県" %>
@@ -27,7 +27,7 @@
           <%= f.radio_button :area, "新潟県" %>
           <%= f.label :area, "新潟県" %>
 
-      <h5 class="font-weight-bold">寄付金額</h5>
+      <h5 class="font-weight-bold table-secondary" style="width:20%">寄付金額</h5>
         <%= f.select :payment_amount, *[1000.step(10000, 1000).to_a], value: @donation.payment_amount %>円
         <%= f.submit "次へ進む", class: 'btn btn-primary' %>
       <% end %>
