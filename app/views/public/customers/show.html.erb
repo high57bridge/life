@@ -1,69 +1,83 @@
 <div class="container mt-2">
   <div class="row">
-    <div class="col-md-8">
-      <h3>マイページ</h3>
-        <table class="table">
+    <div class="col-md-12">
+      <div class="d-flex justify-center flex-wrap">
+        <h3 class="mr-5">マイページ</h3>
+        <%= link_to "編集する", information_edit_public_customers_path, class: 'btn btn-success mb-2' %>
+        <%= link_to "寄付履歴", public_donations_path, class: 'btn btn-info mb-2 ml-2' %>
+        <%= link_to "ご意見・ご質問", about_path, class: 'btn btn-primary mb-2 ml-2' %>
+      </div>
+
+        <table border="1" cellpadding="5" style="width:50%">
           <tr>
-            <td>会員ID</td>
+            <th class="table-secondary" style="width:30%">会員ID</th>
             <td><%= @customer.id %></td>
           </tr>
+
           <tr>
-            <td>氏名</td>
+            <th class="table-secondary">氏名</th>
             <td><%= @customer.last_name %><%= @customer.first_name %></td>
           </tr>
+
           <tr>
-            <td>フリガナ</td>
+            <th class="table-secondary">フリガナ</th>
             <td><%= @customer.last_name_kana %><%= @customer.first_name_kana %></td>
           </tr>
+
           <tr>
-            <td>郵便番号</td>
+            <th class="table-secondary">郵便番号</th>
             <td>〒<%= @customer.postal_code %></td>
           </tr>
+
           <tr>
-            <td>住所</td>
+            <th class="table-secondary">住所</th>
             <td><%= @customer.address %></td>
           </tr>
+
           <tr>
-            <td>電話番号</td>
+            <th class="table-secondary">電話番号</th>
             <td><%= @customer.telephone_number %></td>
           </tr>
+
           <tr>
-            <td>メールアドレス</td>
+            <th class="table-secondary">メールアドレス</th>
             <td><%= @customer.email %></td>
           </tr>
+
           <tr>
-            <td>自治体名</td>
+            <th class="table-secondary">自治体名</th>
             <td><%= @customer.municipality_name %></td>
           </tr>
         </table>
-      <%= link_to "編集する", information_edit_public_customers_path, class: 'btn btn-success' %>
+      </div>
 
-      <h4><i class="fa-solid fa-bookmark mt-2"></i>いいね（ブックマーク）一覧</h4>
-        <table class="table">
-          <thead>
-            <tr>
-              <th>避難場所</th>
-              <th>説明</th>
-              <th>住所</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            <% @likes.each do |like| %>
+      <div class="col-md-8">
+        <h4 class="text-danger"><i class="fa-solid fa-heart mt-3"></i></i>いいね（ブックマーク）一覧</h4>
+        <p>※避難場所をクリックすると詳細ページに遷移します</p>
+        
+          <table border="1" cellpadding"5" style="width:100%">
+            <thead>
               <tr>
-                <td>
-                  <%= link_to public_post_path(like.post) do %>
-                    <%= like.post.name %>
-                  <% end %>
-                </td>
-                <td><%= like.post.introduction %></td>
-                <td><%= like.post.address %></td>
+                <th class="table-secondary" style="width:25%">避難場所</th>
+                <th class="table-secondary" style="width:40%">説明</th>
+                <th class="table-secondary" style="width:35%">住所</th>
               </tr>
-            <% end %>
-          </tbody>
-        </table>
-
-  <%= link_to "寄付履歴", public_donations_path, class: 'btn btn-info' %>
-    </div>
+            </thead>
+  
+            <tbody>
+              <% @likes.each do |like| %>
+                <tr>
+                  <td>
+                    <%= link_to public_post_path(like.post), class: 'text-dark' do %>
+                      <%= like.post.name %>
+                    <% end %>
+                  </td>
+                  <td><%= like.post.introduction %></td>
+                  <td><%= like.post.address %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+      </div>
   </div>
 </div>

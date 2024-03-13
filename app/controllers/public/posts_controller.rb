@@ -34,12 +34,13 @@ class Public::PostsController < ApplicationController
     @comment = Comment.new     # フォーム用のインスタンス作成(コメント追加用)
     @comment_reply = @post.comments.build   #コメントに対する返信用の変数
     @comments = Comment.includes(:customer).where(post_id: @post.id)
-  # if Read.create(post_id: @post.id) 
+    if Read.create!(post_id: @post.id, customer_id: current_customer.id, complete: false)
       @read = Read.update(complete: true)
-  # end
+    end
   end
 
   def new
+    @posts = Post.page(params[:page]).per(5)   # ぺージネーション機能で5つずつ投稿を表示するため
     @total_post = Post.count   # 何件投稿されているか確認するため
   end
 
