@@ -1,20 +1,17 @@
 <div class="container mt-2">
   <div class="row">
     <div class="col-md-8">
-      <h3>会員一覧</h3> 
-      <p>顧客の氏名をクリックすると詳細確認画面へ遷移します。</p>
+      <h3>会員一覧</h3>
+      <p>顧客の氏名をクリックすると詳細画面へ遷移します。</p>
     </div>
-        <table bordercolor="black" class="table" border="1" >
+        <table border="1" cellpadding="5" style="width:77%">
           <thead>
             <tr>
-              <th class="table-secondary">会員ID</th>
-              <th class="table-secondary">氏名</th>
-              <th class="table-secondary">フリガナ</th>
-              <th class="table-secondary">郵便番号</th>
-              <th class="table-secondary">住所</th>
-              <th class="table-secondary">電話番号</th>
-              <th class="table-secondary">自治体名</th>
-              <th class="table-secondary">会員ステータス</th>
+              <th class="table-secondary" style="width:7%">会員ID</th>
+              <th class="table-secondary" style="width:20%">氏名</th>
+              <th class="table-secondary" style="width:20%">フリガナ</th>
+              <th class="table-secondary" style="width:15%">電話番号</th>
+              <th class="table-secondary" style="width:15%">会員ステータス</th>
             </tr>
           </thead>
           <% @customers.each do |customer| %>
@@ -22,15 +19,12 @@
             <tr>
               <td><%= customer.id %></td>
               <td>
-                <%= link_to admin_customer_path(customer), class: "text-dark" do %>
+                <%= link_to admin_customer_path(customer), class: "text-info" do %>
                   <%= customer.last_name %><%= customer.first_name %>
                 <% end %>
               </td>
               <td><%= customer.last_name_kana %><%= customer.first_name_kana %></td>
-              <td><%= customer.postal_code %></td>
-              <td><%= customer.address %></td>
               <td><%= customer.telephone_number %></td>
-              <td><%= customer.municipality_name %></td>
               <td>
                 <% if customer.is_active %>
                   <div class="text-success">有効</div>

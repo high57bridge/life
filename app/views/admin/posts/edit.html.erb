@@ -2,11 +2,20 @@
   <div class="row">
     <div class="col-md-8">
       <h3>投稿の編集</h3>
+      
+      <% if @post.errors.any? %>
+        <%= @post.errors.count %>件のエラーが発生しました
+      <ul>
+        <% @post.errors.full_messages.each do |message| %>
+          <div><%= message %></div>
+        <% end %>
+      </ul>
+      <% end %>
 
         <%= form_with model: @post, url: admin_post_path do |f| %>
         <table class="table">
           <tr>
-            <th>画像・地図</th>
+            <th>画像</th>
             <td><%= f.file_field :image, accept: "image*/" %></td>
           </tr>
           

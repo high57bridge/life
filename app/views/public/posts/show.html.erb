@@ -69,11 +69,11 @@
                             <div><%= render_with_tags(@post.introduction) %></div>
                     </div>
                      <div class="d-flex justify-center flex-wrap">
-                        <div class="font-weight-bold">住所：</div>
+                        <div class="font-weight-bold"><i class="fa-solid fa-house text-danger mr-2"></i>住所：</div>
                             <div><%= @post.address %></div>
                     </div>
                     <div class="d-flex justify-center flex-wrap">
-                        <div class="font-weight-bold">登録日：</div>
+                        <div class="font-weight-bold"><i class="fa-solid fa-calendar-days text-danger mr-2"></i>登録日：</div>
                             <div><%= @post.created_at.strftime('%Y/%m/%d') %></div>
                     </div>
 <!--いいね表示-->
@@ -103,7 +103,7 @@
     </div>
 
 <!--コメント表示-->
-コメント件数：<%= @post.comments.count %>
+<i class="fa-regular fa-comments mt-2"></i><%= @post.comments.count %>コメント
     <% @post.comments.where(reply_comment:nil).each do |comment| %>
         <div style="width:55%" class="border-info border rounded m-1">
             <div class="d-flex justify-center flex-wrap">

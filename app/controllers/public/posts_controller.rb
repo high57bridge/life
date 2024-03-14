@@ -1,19 +1,5 @@
 class Public::PostsController < ApplicationController
-
-  def new_guest
-    # emailでユーザーが見つからなければ作ってくれるという便利なメソッド
-    customer = Customer.find_or_create_by(email: 'guest@example.com') do |customer|
-    # 自分はユーザー登録時にニックネームを必須にしているのでこの記述が必要
-    customer.nickname = "ゲスト"
-    # 英数字混合を必須にしているので、ランダムパスワードに、英字と数字を追加してバリデーションに引っかからないようにしています。
-    customer.password = SecureRandom.alphanumeric(10) + [*'a'..'z'].sample(1).join + [*'0'..'9'].sample(1).join
-    customer.confirmed_at = Time.now
-    end
-    # sign_inはログイン状態にするデバイスのメソッド、customerは3行目の変数customerです。
-    sign_in customer
-    # ログイン後root_pathに飛ぶようにしました。
-    redirect_to root_path
-  end
+  before_action :authenticate_customer!
 
   def index
        @posts = Post.page(params[:page]).per(5)   # ぺージネーション機能で5つずつ投稿を表示するため
@@ -34,9 +20,7 @@ class Public::PostsController < ApplicationController
     @comment = Comment.new     # フォーム用のインスタンス作成(コメント追加用)
     @comment_reply = @post.comments.build   #コメントに対する返信用の変数
     @comments = Comment.includes(:customer).where(post_id: @post.id)
-    if Read.create!(post_id: @post.id, customer_id: current_customer.id, complete: false)
-      @read = Read.update(complete: true)
-    end
+    Read.create(post_id: @post.id, customer_id: current_customer.id, complete: true)
   end
 
   def new
