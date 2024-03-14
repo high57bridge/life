@@ -2,29 +2,29 @@
   <div class="row">
     <div class="col-md-8">
       <h3>お知らせ投稿一覧</h3>
+      <p>画像をクリックすると詳細画面へ遷移します。</p>
       <%= link_to new_admin_post_path, class: 'text-dark' do %>
         <i class="fas fa-plus">新規投稿</i>
       <% end %>
     </div>
 
-    <% @posts.each do |post| %>
-      <table class="table">
+      <table border="1" cellpadding="5" style="width:100%">
         <thead>
           <tr>
-            <th>避難場所の画像</th>
-            <th>避難場所</th>
-            <th>説明</th>
-            <th>住所</th>
-            <th>登録日</th>
+            <th class="table-secondary">避難場所の画像</th>
+            <th class="table-secondary">避難場所</th>
+            <th class="table-secondary">説明</th>
+            <th class="table-secondary">住所</th>
+            <th class="table-secondary">登録日</th>
           </tr>
         </thead>
-        
+      <% @posts.each do |post| %>
         <tbody>
           <tr>
             <td>
               <% if post.image.present? %>
                 <%= link_to admin_post_path(post) do %>
-                  <%= image_tag post.image, size: "250x200" %>
+                  <%= image_tag post.image, size: "150x100" %>
                 <% end %>
               <% end %>
             </td>
@@ -34,7 +34,7 @@
             <td><%= post.created_at.strftime('%Y/%m/%d') %></td>
           </tr>
         </tbody>
+      <% end %>
       </table>
-    <% end %>
   </div>
 </div>

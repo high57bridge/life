@@ -1,5 +1,6 @@
 class Public::DonationsController < ApplicationController
-
+  before_action :authenticate_customer!
+  
   def index
     @donations = current_customer.donations
   end

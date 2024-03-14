@@ -3,14 +3,14 @@
     <div class="col-md-8">
       <h3>寄付履歴一覧</h3>
 
-        <table class="table">
+        <table  border="1" cellpadding="5" style="width:100%">
           <thead>
             <tr>
-              <th>寄付場所</th>
-              <th>寄付金額</th>
-              <th>寄付方法</th>
-              <th>寄付日</th>
-              <th>お名前</th>
+              <th class="table-secondary" style="width:20%">寄付場所</th>
+              <th class="table-secondary" style="width:20%">寄付金額</th>
+              <th class="table-secondary" style="width:20%">寄付方法</th>
+              <th class="table-secondary" style="width:20%">寄付日</th>
+              <th class="table-secondary" style="width:20%">お名前</th>
             </tr>
           </thead>
           
@@ -27,7 +27,7 @@
         <% end %>
         </table>
 
-        <div>合計金額: <%= @donation_payment_total.to_s(:delimited) %>円</div>
+        <div class="font-weight-bold bg-info mt-4" style="width:20%">合計金額: <%= @donation_payment_total.to_s(:delimited) %>円</div>
     </div>
   </div>
 </div>
