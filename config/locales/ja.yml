@@ -16,11 +16,22 @@ ja:
       post:
         name: "名前"
         introduction: "説明"
+        address: "住所"
         image: "画像"
       home:
         name: "氏名"
         opinion: "ご意見またはご質問"
         email: "メールアドレス"
+      customer:
+        last_name: 姓
+        first_name: 名
+        last_name_kana: セイ
+        first_name_kana: メイ
+        postal_code: 郵便番号
+        address: 住所
+        telephone_number: 電話番号
+        municipality_name: 自治体
+        email: メールアドレス
   date:
     abbr_day_names:
     - 日

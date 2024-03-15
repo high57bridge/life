@@ -6,11 +6,11 @@
         <table  border="1" cellpadding="5" style="width:100%">
           <thead>
             <tr>
-              <th class="table-secondary" style="width:20%">寄付場所</th>
-              <th class="table-secondary" style="width:20%">寄付金額</th>
-              <th class="table-secondary" style="width:20%">寄付方法</th>
+              <th class="table-secondary" style="width:20%">場所</th>
+              <th class="table-secondary" style="width:20%">金額</th>
+              <th class="table-secondary" style="width:20%">支払方法</th>
               <th class="table-secondary" style="width:20%">寄付日</th>
-              <th class="table-secondary" style="width:20%">お名前</th>
+              <th class="table-secondary" style="width:20%">氏名</th>
             </tr>
           </thead>
           
@@ -30,4 +30,5 @@
         <div class="font-weight-bold bg-info mt-4" style="width:20%">合計金額: <%= @donation_payment_total.to_s(:delimited) %>円</div>
     </div>
   </div>
+  <%= paginate @donations %>
 </div>

@@ -1,16 +1,16 @@
 <div class="container mt-2">
   <div class="row">
     <h3>検索結果</h3><p class="ml-3">※下記の画像を押すと、詳細ページに進みます</p>
-    <table border="1" cellpadding="5" style="width:100%">
+    <table border="1" cellpadding="5" style="width:70%">
       <% @range == "Post" %>
       <!--検索対象モデルがPost -->
       <thead>
         <tr>
-          <th class="table-secondary">画像</th>
-          <th class="table-secondary">場所</th>
-          <th class="table-secondary">説明</th>
-          <th class="table-secondary">住所</th>
-          <th class="table-secondary">投稿日</th>
+          <th class="table-secondary" style="width:15%">画像</th>
+          <th class="table-secondary" style="width:15%">場所</th>
+          <th class="table-secondary" style="width:20%">説明</th>
+          <th class="table-secondary" style="width:10%">住所</th>
+          <th class="table-secondary" style="width:10%">投稿日</th>
         </tr>
       </thead>
     <% @posts.each do |post| %>
@@ -19,7 +19,7 @@
           <td>
             <% if post.image.present? %>
               <%= link_to public_post_path(post) do %>
-                <%= image_tag post.image, size: "200x150" %>
+                <%= image_tag post.image, size: "150x120" %>
               <% end %>
             <% end %>
           </td>

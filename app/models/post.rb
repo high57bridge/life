@@ -3,6 +3,7 @@ class Post < ApplicationRecord
   validates :image, presence: true
   validates :name, presence: true
   validates :introduction, presence: true
+  validates :address, presence: true
   
   has_many :comments, dependent: :destroy  # Post.comments で、その投稿のコメント取得
   has_many :replies, class_name: "Comment", foreign_key: :reply_comment, dependent: :destroy
