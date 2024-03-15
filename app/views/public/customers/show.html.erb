@@ -68,7 +68,7 @@
               <% @likes.each do |like| %>
                 <tr>
                   <td>
-                    <%= link_to public_post_path(like.post), class: 'text-dark' do %>
+                    <%= link_to public_post_path(like.post), class: 'text-info' do %>
                       <%= like.post.name %>
                     <% end %>
                   </td>

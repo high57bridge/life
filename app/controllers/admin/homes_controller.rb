@@ -2,7 +2,7 @@ class Admin::HomesController < ApplicationController
   before_action :authenticate_admin!
   
   def top
-    @homes = Home.all
+    @homes = Home.page(params[:page]).per(5)   # ぺージネーション機能で5つずつ要望表示するため
   end
 
   def show
