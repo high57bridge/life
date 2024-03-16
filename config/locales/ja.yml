@@ -17,7 +17,6 @@ ja:
         name: "名前"
         introduction: "説明"
         address: "住所"
-        image: "画像"
       home:
         name: "氏名"
         opinion: "ご意見またはご質問"
