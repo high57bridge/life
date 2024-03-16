@@ -2,26 +2,38 @@
   <div class="row">
     <div class="col-md-8">
       <h3>お知らせ一覧</h3>
-      <h6>新着のお知らせは<%= link_to "こちら", new_public_post_path %>から</h6>
+      <h6>新着のお知らせは<%= link_to "こちら", new_public_post_path, class: 'text-info' %>から</h6>
     </div>
 
   </div>
     <h5>現在<%= @total_post %>件の投稿があります</h5>
       
-<div class="d-flex justify-center flex-wrap">
+<table border="1" cellpadding="5" style="width:100%">
+  <thead>
+    <tr>
+      <th class="table-secondary">場所</th>
+      <th class="table-secondary">説明</th>
+      <th class="table-secondary">住所</th>
+      <th class="table-secondary">投稿日</th>
+    </tr>
+  </thead>
   <% @posts.each do |post| %>
-          <div class="m-3">
-              <% if post.image.present? %>
-                <%= link_to public_post_path(post) do %>
-                  <%= image_tag post.image, size: "200x150" %>
-                <% end %>
-              <% end %>
-              <div>場所：<%= post.name %></div>
-              <div>説明：<%= post.introduction %></div>
-              <div>住所：<%= post.address %></div>
-              <div>投稿日：<%= post.created_at.strftime('%Y/%m/%d') %></div>
-            </div>
-          <% end %>
+  <tbody>
+    <tr>
+      <td>
+        <%= link_to public_post_path(post), class: 'text-info' do %>
+          <%= post.name %>
+        <% end %>
+      </td>
+      <td><%= post.introduction %></td>
+      <td><%= post.address %></td>
+      <td><%= post.created_at.strftime('%Y/%m/%d') %></td>
+    </tr>
+  </tbody>
+  <% end %>
+</table>
+  
+          
         </div>
     <%= paginate @posts %>
 </div>

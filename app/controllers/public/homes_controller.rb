@@ -1,4 +1,8 @@
 class Public::HomesController < ApplicationController
+  
+  def index
+    @homes = Home.page(params[:page]).per(5)   # ぺージネーション機能で5つずつ投稿を表示するため
+  end
 
   def about
     @home = Home.new
@@ -7,7 +11,6 @@ class Public::HomesController < ApplicationController
   def create
       @home = Home.new(home_params)
     if @home.save
-      flash[:notice]= "送信しました"
       redirect_to complete_path
     else
       @homes = Home.all
