@@ -21,7 +21,7 @@
       <div class="row">
       <div class="col-md-12">
     <%= form_with model: @home, url: public_homes_path do |f| %>
-    <table style="width:70%" class="mx-auto mt-5">
+    <table class="table mx-auto mt-5" style="width:70%">
       <tr>
         <th><%= f.label :氏名 %></th>
         <td><%= f.text_field :name, autofocus: true %></td>

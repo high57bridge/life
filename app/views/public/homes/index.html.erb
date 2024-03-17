@@ -2,24 +2,22 @@
   <div class="row">
     <div class="col-md-8">
       <h3>問い合わせ履歴一覧</h3>
-      <div class="font-weight-bold">新規問い合わせは
+      <div class="font-weight-bold mb-2">新規問い合わせは
         <%= link_to "こちら", about_path, class: 'text-info' %>から
       </div>
     </div>
-        <table border="1" cellpadding="5" style="width:100%">
+        <table border="1" cellpadding="5" style="width:65%">
           <thead>
             <tr>
-              <th class="table-secondary" style="width:15%">氏名</th>
-              <th class="table-secondary" style="width:20%">メールアドレス</th>
-              <th class="table-secondary" style="width:40%">お問い合わせ内容</th>
+              <th class="table-secondary" style="width:15%">メールアドレス</th>
+              <th class="table-secondary" style="width:30%">お問い合わせ内容</th>
               <th class="table-secondary" style="width:10%">送信日</th>
-              <th class="table-secondary" style="width:25%">確認ステータス</th>
+              <th class="table-secondary" style="width:10%"></th>
             </tr>
           </thead>
         <% @homes.each do |home| %>
           <tbody>
             <tr>
-              <td><%= home.name %></td>
               <td><%= home.email %></td>
               <td><%= home.opinion %></td>
               <td><%= home.created_at.strftime('%Y/%m/%d') %></td>
@@ -35,5 +33,4 @@
         <% end %>
         </table>
   </div>
-  <%= paginate @homes %>
 </div>

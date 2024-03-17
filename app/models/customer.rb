@@ -13,7 +13,7 @@ class Customer < ApplicationRecord
         validates :telephone_number, presence: true
         validates :municipality_name, presence: true
 
-        # has_many :posts, dependent: :destroy
+        has_many :homes, dependent: :destroy
         has_many :donations, dependent: :destroy
         has_many :likes, dependent: :destroy
         has_many :comments, dependent: :destroy  # Customer.comments で、ユーザーのコメント取得
