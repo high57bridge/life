@@ -1,7 +1,7 @@
 class Public::HomesController < ApplicationController
   
   def index
-    @homes = Home.page(params[:page]).per(5)   # ぺージネーション機能で5つずつ投稿を表示するため
+    @homes = current_customer.homes
   end
 
   def about
@@ -10,6 +10,7 @@ class Public::HomesController < ApplicationController
 
   def create
       @home = Home.new(home_params)
+      @home.customer_id = current_customer.id
     if @home.save
       redirect_to complete_path
     else

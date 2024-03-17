@@ -7,7 +7,8 @@
         <table border="1" cellpadding="5" style="width:100%">
           <thead>
             <tr>
-              <th class="table-secondary" style="width:15%">氏名</th>
+              <th class="table-secondary" style="width:5%">会員ID</th>
+              <th class="table-secondary" style="width:10%">氏名</th>
               <th class="table-secondary" style="width:20%">メールアドレス</th>
               <th class="table-secondary" style="width:40%">お問い合わせ内容</th>
               <th class="table-secondary" style="width:10%">受信日</th>
@@ -17,6 +18,7 @@
         <% @homes.each do |home| %>
           <tbody>
             <tr>
+              <td><%= home.customer_id %></td>
               <td>
                 <%= link_to admin_home_path(home), class: "text-info" do %>
                   <%= home.name %>

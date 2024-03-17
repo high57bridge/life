@@ -11,11 +11,10 @@ class Public::CustomersController < ApplicationController
   end
 
   def update
-       @customer = current_customer
+    @customer = current_customer
     if @customer.update(customer_params)
       redirect_to mypage_public_customers_path
     else
-      @customer = current_customer
       render :edit
     end
   end

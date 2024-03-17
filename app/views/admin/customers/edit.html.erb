@@ -1,5 +1,7 @@
 <div class="container mt-2">
-  <h3>会員情報変更</h3>
+  <div class="row">
+    <div class="col-md-12">
+      <h3>会員情報変更</h3>
   
   <% if @customer.errors.any? %>
     <%= @customer.errors.count %>件のエラーが発生しました
@@ -18,25 +20,19 @@
         </tr>
         <tr>
           <th>氏名</th>
-          <td>
-            <%= f.text_field :last_name, autofocus: true, id:"inputName" %>
-            <%= f.text_field :first_name, autofocus: true, id:"inputName" %>
-          </td>
+          <td><%= @customer.last_name %><%= @customer.first_name %></td>
         </tr>
         <tr>
           <th>フリガナ</th>
-          <td>
-            <%= f.text_field :last_name_kana, autofocus: true, id:"inputName" %>
-            <%= f.text_field :first_name_kana, autofocus: true, id:"inputName" %>
-          </td>
+          <td><%= @customer.last_name_kana %><%= @customer.first_name_kana %></td>
         </tr>
         <tr>
           <th>郵便番号</th>
-          <td><%= f.text_field :postal_code, autofocus: true %></td>
+          <td><%= @customer.postal_code %></td>
         </tr>
         <tr>
           <th>住所</th>
-          <td><%= f.text_field :address, autofocus: true %></td>
+          <td><%= @customer.address %></td>
         </tr>
         <tr>
           <th>電話番号</th>
@@ -48,17 +44,20 @@
         </tr>
         <tr>
           <th>自治体名</th>
-          <td><%= f.text_field :municipality_name, autofocus: true %></td>
+          <td><%= @customer.municipality_name %></td>
         </tr>
           <th>会員ステータス</th>
           <td>
-            <%= f.radio_button :is_active, true %>
-            <%= f.label :is_active, "有効" %>
-            <%= f.radio_button :is_active, false %>
-            <%= f.label :is_active, "退会" %>
+            <% if @customer.is_active %>
+              <div class="text-success">有効</div>
+            <% else %>
+              <div class="text-secondary">退会</div>
+            <% end %>
           </td>
         </tr>
       </table>
       <%= f.submit "変更を確定", class: "btn btn-success" %>
+      </div>
     <% end %>
+  </div>
 </div>

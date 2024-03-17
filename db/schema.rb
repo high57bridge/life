@@ -110,6 +110,7 @@ ActiveRecord::Schema.define(version: 2024_03_10_133429) do
   end
 
   create_table "homes", force: :cascade do |t|
+    t.integer "customer_id", null: false
     t.string "name", null: false
     t.string "email", null: false
     t.text "opinion", null: false
