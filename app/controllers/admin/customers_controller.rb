@@ -1,6 +1,8 @@
 class Admin::CustomersController < ApplicationController
+  before_action :authenticate_admin!
+
   def index
-    @customers = Customer.all
+    @customers = Customer.page(params[:page]).per(5)   # ぺージネーション機能で5つずつ会員を表示するため
   end
 
   def show
@@ -19,7 +21,7 @@ class Admin::CustomersController < ApplicationController
       render :edit
     end
   end
-  
+
   def destroy
        @customer = Customer.find(params[:id])
     if @customer.destroy
@@ -29,11 +31,11 @@ class Admin::CustomersController < ApplicationController
       render :show
     end
   end
-  
+
   private
-  
+
   def customer_params
     params.require(:customer).permit(:customer_id, :last_name, :first_name, :last_name_kana, :first_name_kana,
-                                    :email, :postal_code, :address, :telephone_number, :is_active)
+                                    :email, :postal_code, :address, :telephone_number,:municipality_name, :is_active)
   end
 end

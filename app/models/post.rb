@@ -1,19 +1,17 @@
 class Post < ApplicationRecord
-  has_one_attached :image
-  validates :image, presence: true
+  validates :name, presence: true
+  validates :introduction, presence: true
+  validates :address, presence: true
   
   has_many :comments, dependent: :destroy  # Post.comments で、その投稿のコメント取得
-  has_many :favorites, dependent: :destroy
-
-  def favorited_by?(customer)
-    favorites.exists?(customer_id: customer)
+  has_many :replies, class_name: "Comment", foreign_key: :reply_comment, dependent: :destroy
+  
+  has_many :likes, dependent: :destroy
+  def liked_by?(customer)
+    likes.exists?(customer_id: customer)
   end
   
-  has_many :bookmarks, dependent: :destroy
-
-  def bookmarked_by?(customer)
-    bookmarks.where(customer_id: customer).exists?
-  end
+  has_many :reads, dependent: :destroy
   
   has_many :hashtags, dependent: :destroy
   has_many :tags, through: :hashtags
@@ -54,6 +52,4 @@ class Post < ApplicationRecord
     end
   end
   
-  geocoded_by :address
-  after_validation :geocode
 end

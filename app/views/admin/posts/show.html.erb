@@ -2,97 +2,100 @@
     <div class="row">
         <div class="col-md-8">
             <h3>お知らせ詳細画面</h3>
-                <div style="width: 50vw; height: 50vh" id="map"></div>
+                <div class="font-weight-bold">地図検索</div>
+                    <input id="address" type="textbox" value="GeekSalon">
+                    <input type="button" value="検索" onclick="codeAddress()"> 
+                        <div id="display">検索結果が表示されます</div>
+                            <div id='map'></div>
+
+                            <style>#map { height: 400px; width: 500px;}</style>
+
                             <script>
-                                var platform = new H.service.Platform({
-                                  'apikey': '<%= ENV['HERE_MAP_API_KEY'] %>'
-                                });
-                                // configure an OMV service to use the `core` enpoint
-                                var omvService = platform.getOMVService({path:  'v2/vectortiles/core/mc'});
-                                var baseUrl = 'https://js.api.here.com/v3/3.1/styles/omv/oslo/japan/';
+                                let map
+                                let geocoder
 
-                                // create a Japan specific style
-                                var style = new H.map.Style(`${baseUrl}normal.day.yaml`, baseUrl);
-                                
-                                // instantiate provider and layer for the basemap
-                                var omvProvider = new H.service.omv.Provider(omvService, style);
-                                var omvlayer = new H.map.layer.TileLayer(omvProvider);
-                                var position = {lat: <%= @post.latitude %>, lng: <%= @post.longitude %>}
-                                
-                                // Get an instance of the geocoding service:
-                                var service = platform.getSearchService();
+                                const display = document.getElementById('display')
 
-                                // Call the "autosuggest" method with the search parameters,
-                                // the callback and an error callback function (called if a
-                                // communication error occurs):
-                                service.autosuggest({
-                                  // Search query
-                                  q: '<%= @post.address %>',
-                                  // Center of the search context
-                                  at: '<%= @post.latitude %>,<%= @post.longitude %>'
-                                }, (result) => {
-                                  let center = result.items[0].position
-                                  // instantiate (and display) a map:
-                                  var map = new H.Map(
-                                      document.getElementById('map'),
-                                      omvlayer,
-                                      {
-                                        zoom: 17,
-                                        center: center ?? position
+                                function initMap(){
+                                  geocoder = new google.maps.Geocoder(),
+
+                                  map = new google.maps.Map(document.getElementById('map'), {
+                                    // latが緯度、lngが経度を示します
+                                    center: {lat: 40.7828, lng:-73.9653},
+                                    //数値は0〜21まで指定できます。数値が大きいほど拡大されます
+                                    zoom: 10,
+                                  });
+                                  //positionに指定した座標にピンを表示させます
+                                  marker = new google.maps.Marker({
+                                    position:  {lat: 40.7828, lng:-73.9653},
+                                    map: map
+                                  });
+                                }
+
+                                  //検索フォームのボタンが押された時に実行される
+                                function codeAddress(){
+                                  //検索フォームの入力内容を取得
+                                  let inputAddress = document.getElementById('address').value;
+
+                                  geocoder.geocode( { 'address': inputAddress}, function(results, status) {
+                                    //該当する検索結果がヒットした時に、地図の中心を検索結果の緯度経度に更新する
+                                    if (status == 'OK') {
+                                      map.setCenter(results[0].geometry.location);
+                                      var marker = new google.maps.Marker({
+                                          map: map,
+                                          position: results[0].geometry.location
                                       });
-                                  map.addObject(new H.map.Marker(center))
-                                
-                                  // make map interactive
-                                  window.addEventListener('resize', () => map.getViewPort().resize());
-                                  var behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
-                                }, (error) => {
-                                  console.error(error)
-                                });
+                                      display.textContent = "検索結果：" + results[ 0 ].geometry.location
+                                    } else {
+                                      //検索結果が何もなかった場合に表示
+                                      alert('該当する結果がありませんでした：' + status);
+                                    }
+                                  });
+                                }
                             </script>
-                            
-                <table class="table">
-                    <tr>
-                        <th>避難場所の画像・地図</th>
-                        <td>
-                            <% if @post.image.present? %>
-                                <%= image_tag @post.image, size: "250x200" %>
-                            <% end %>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>避難場所</th>
-                        <td><%= @post.name %></td>
-                    </tr>
-                    <tr>
-                        <th>避難場所に関しての説明</th>
-                        <td><%= @post.introduction %></td>
-                    </tr>
-                    <tr>
-                        <th>避難場所の住所</th>
-                        <td><%= @post.address %></td>
-                    </tr>
-                    <tr>
-                        <th>更新日</th>
-                        <td><%= @post.updated_at.strftime('%Y/%m/%d') %></td>
-                    </tr>
-                </table>
-                
+                            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDZc0kt_YOoE9NQucQ3rfwtMT58W4xullY&callback=initMap" async defer></script>
+
+                    <div class="d-flex justify-center flex-wrap mt-2">
+                        <div class="font-weight-bold"><i class="fa-solid fa-person-running text-danger mr-2"></i>避難場所：</div>
+                            <div><%= @post.name %></div>
+                    </div>
+                    <div class="d-flex justify-center flex-wrap">
+                        <div class="font-weight-bold"><i class="fa-solid fa-book-open text-danger mr-2"></i>説明：</div>
+                            <div><%= render_with_tags(@post.introduction) %></div>
+                    </div>
+                     <div class="d-flex justify-center flex-wrap">
+                        <div class="font-weight-bold"><i class="fa-solid fa-house text-danger mr-2"></i>住所:：</div>
+                            <div><%= @post.address %></div>
+                    </div>
+                    <div class="d-flex justify-center flex-wrap">
+                        <div class="font-weight-bold"><i class="fa-solid fa-calendar-days text-danger mr-2"></i>登録日：</div>
+                            <div><%= @post.created_at.strftime('%Y/%m/%d') %></div>
+                    </div>
+                    
     <div class="mt-2">
         <%= link_to "投稿を編集する", edit_admin_post_path, class: 'btn btn-success' %>
         <%= link_to "投稿を削除する", admin_post_path, method: :delete, "data-confirm" => "本当に削除しますか", class: 'btn btn-danger' %>
     </div>
 
+<!--いいね表示-->
+    <div class="mt-2">
+        <i class="fa-solid fa-heart"></i><%= @post.likes.count %> いいね（ブックマーク）
+    </div>
+    
 <!--コメント表示-->
-コメント件数：<%= @post.comments.count %>
-    <% @post.comments.each do |c| %>
+<i class="fa-regular fa-comments mt-2"></i><%= @post.comments.count %>コメント
+    <% @post.comments.each do |comment| %>
         <div style="width:55%" class="border-info border rounded">
-            <p class="font-weight-bold">  <!--投稿者のIDと名前-->
-                [<%= c.customer.id %>]<%= c.customer.last_name %><%= c.customer.first_name %>
-            </p>
-                <%= simple_format(c.comment) %>   <!--改行ありで表示-->
-                <%= c.created_at.strftime('%Y/%m/%d %H:%M') %>  <!--投稿日時-->
+                <p class="font-weight-bold">  <!--投稿者のIDと名前-->
+                    [<%= comment.customer.id %>]
+                    <%= comment.customer.last_name %><%= comment.customer.first_name %>
+                </p>
+                <%= simple_format(comment.comment) %>   <!--改行ありで表示-->
+                <%= comment.created_at.strftime('%Y/%m/%d %H:%M') %>  <!--投稿日時-->
+          
+                
                 <!--コメント削除には、@post（親）, @commentsのc に渡す必要がある-->
-                <%= link_to admin_post_comment_path(@post, c), method: :delete, "data-confirm" => "本当に削除しますか？", class: 'text-danger' do %>
+                <%= link_to admin_post_comment_path(@post, comment), method: :delete, "data-confirm" => "本当に削除しますか？", class: 'text-danger' do %>
                     <i class="fa-solid fa-trash"></i> 削除
                 <% end %>
         </div>

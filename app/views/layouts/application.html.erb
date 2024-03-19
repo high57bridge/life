@@ -12,9 +12,11 @@
 
   <body>
     <header class="shadow-sm">
-      <nav class="navbar navbar-expand-lg navbar-dark">
+      <nav class="navbar navbar-expand-lg navbar-light bg-info">
         <div class="container">
-          <h2>LIFE</h2>
+          <%= link_to root_path, class: 'text-light' do%>
+            <h2>LIFE</h2>
+          <% end %>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
@@ -51,7 +53,7 @@
                   
                   <%= link_to "寄付一覧", admin_donations_path, class: 'nav-link text-dark' %>
 
-                  <%= link_to "トップページ", top_path, class: 'nav-link text-dark' %>
+                  <%= link_to "問い合わせ一覧", top_path, class: 'nav-link text-dark' %>
 
                   <%= link_to "ログアウト", destroy_admin_session_path, method: :delete, class: 'nav-link text-dark' %>
 
@@ -71,14 +73,25 @@
         </div>
       </nav>
     </header>
-    <%= flash[:notice] %>
+    <div class="container">
+      <% if flash[:notice].present? %>
+        <div class="alert alert-success">
+          <%= flash[:notice] %>
+        </div>
+      <% end %>
+      <% if flash[:alert].present? %>
+        <div class="alert alert-danger">
+          <%= flash[:alert] %>
+        </div>
+      <% end %>
+    </div>
     <%= yield %>
   </body>
 
   <footer>
     <div class="container mt-5">
       <div class="row">
-        <div class="mx-auto">CopyRight Infratop.inc</div>
+        <div class="mx-auto">© 2024 WebCamp</div>
       </div>
     </div>
   </footer>

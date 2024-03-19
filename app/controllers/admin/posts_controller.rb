@@ -1,6 +1,7 @@
 class Admin::PostsController < ApplicationController
+  
   def index
-    @posts = Post.all
+    @posts = Post.page(params[:page]).per(5)   # ぺージネーション機能で5つずつ投稿を表示するため
   end
 
   def new
@@ -49,6 +50,6 @@ class Admin::PostsController < ApplicationController
   private
 
   def post_params
-    params.require(:post).permit(:name, :introduction, :address, :image, :latitude, :longitude)
+    params.require(:post).permit(:name, :introduction, :address, :image)
   end
 end

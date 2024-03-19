@@ -1,91 +1,98 @@
 <div class="container mt-2">
     <div class="row">
         <div class="col-md-8">
-            <h3>お知らせ詳細画面</h3>
-                <table class="table">
-                    <tr>
-                        <th>避難場所の画像・地図</th>
-                        <td>
-                            <% if @post.image.present? %>
-                                <%= image_tag @post.image, size: "100x100" %>
-                            <% end %>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th><i class="fa-solid fa-person-running text-danger"></i>避難場所</th>
-                        <td><%= @post.name %></td>
-                    </tr>
-                    <tr>
-                        <th><i class="fa-solid fa-house text-danger"></i>避難場所に関しての説明</th>
-                        <td><%= render_with_tags(@post.introduction) %></td>
-                    </tr>
-                    <tr>
-                        <th>避難場所の住所</th>
-                        <td><%= @post.address %></td>
-                    </tr>
-                    <tr>
-                        <th>登録日時</th>
-                        <td><%= @post.created_at.strftime('%Y/%m/%d') %></td>
-                    </tr>
-                </table>
-<!--いいね表示-->
-<% if @post.favorited_by?(current_customer) %>
-    <p>  <!--いいね作成-->
-      <%= link_to public_post_favorites_path(@post), method: :delete do %>
-        <i class="fa-solid fa-heart"></i><%= @post.favorites.count %> いいね
-      <% end %>
-    </p>
-    <% else %>
-    <p>  <!--いいね削除-->
-      <%= link_to public_post_favorites_path(@post), method: :post do %>
-        <i class="fa-regular fa-heart"></i><%= @post.favorites.count %> いいね
-      <% end %>
-    </p>
-<% end %>
+            <h3>お知らせ詳細</h3>
+                <div class="font-weight-bold">地図検索</div>
+                    <input id="address" type="textbox" value="GeekSalon">
+                    <input type="button" value="検索" onclick="codeAddress()">  ※下記に記載されている住所を地図上のバーで検索してください。
+                        <div id="display">検索結果が表示されます</div>
+                            <div id='map'></div>
 
-<!--ブックマーク表示-->
-<% if @post.bookmarked_by?(current_customer) %>
-    <p>  <!--ブックマーク作成-->
-        <%= link_to public_post_bookmarks_path(@post), method: :delete do %>
-            <i class="fa-solid fa-bookmark"></i><%= @post.bookmarks.count %> ブックマーク
-        <% end %>
-    </p>
-        <% else %>
-    <p>  <!--ブックマーク削除-->
-        <%= link_to public_post_bookmarks_path(@post), method: :post do %>
-            <i class="fa-regular fa-bookmark"></i><%= @post.bookmarks.count %> ブックマーク
-        <% end %>
-    </p>
-<% end %>
+                            <style>
+                                #map {
+                                  height: 400px;
+                                  width: 500px;
+                                }
+                            </style>
 
-<!--コメント表示-->
-コメント件数：<%= @post.comments.count %>
-    <% @post.comments.each do |comment| %>
-        <div style="width:55%" class="border-info border rounded m-1">
-            <div class="d-flex justify-center flex-wrap">
-                <p class="font-weight-bold mr-2">  <!--投稿者のIDと名前-->
-                    [<%= comment.customer.id %>]<%= comment.customer.last_name %><%= comment.customer.first_name %>
-                </p>
-                <%= comment.created_at.strftime('%Y/%m/%d %H:%M') %>  <!--投稿日時-->
+                            <script>
+                                let map
+                                let geocoder
 
-            <!--ログインしている本人のみ操作できるようにするための分岐-->
-                <% if customer_signed_in? && (current_customer == comment.customer) %>
-                    <!--コメント削除には、@post（親）, @commentsのc に渡す必要がある-->
-                    <span data-comment-id=<%= comment.id %> class="js-edit-comment-button" >
-                        <i class="fa-solid fa-pen-to-square ml-2 text-success"></i> 編集
-                    </span>
+                                const display = document.getElementById('display')
 
-                    <%= link_to public_post_comment_path(@post, comment), method: :delete, "data-confirm" => "本当に削除しますか？", class: 'text-danger' do %>
-                        <i class="fa-solid fa-trash ml-2"></i> 削除
-                    <% end %>
+                                function initMap(){
+                                  geocoder = new google.maps.Geocoder(),
 
-                    <div id="js-comment-<%= comment.id %>">
-                        <%= render "public/comments/js_comment", comment: comment %>
+                                  map = new google.maps.Map(document.getElementById('map'), {
+                                    // latが緯度、lngが経度を示します
+                                    center: {lat: 40.7828, lng:-73.9653},
+                                    //数値は0〜21まで指定できます。数値が大きいほど拡大されます
+                                    zoom: 10,
+                                  });
+                                  //positionに指定した座標にピンを表示させます
+                                  marker = new google.maps.Marker({
+                                    position:  {lat: 40.7828, lng:-73.9653},
+                                    map: map
+                                  });
+                                }
+
+                                  //検索フォームのボタンが押された時に実行される
+                                function codeAddress(){
+                                  //検索フォームの入力内容を取得
+                                  let inputAddress = document.getElementById('address').value;
+
+                                  geocoder.geocode( { 'address': inputAddress}, function(results, status) {
+                                    //該当する検索結果がヒットした時に、地図の中心を検索結果の緯度経度に更新する
+                                    if (status == 'OK') {
+                                      map.setCenter(results[0].geometry.location);
+                                      var marker = new google.maps.Marker({
+                                          map: map,
+                                          position: results[0].geometry.location
+                                      });
+                                      display.textContent = "検索結果：" + results[ 0 ].geometry.location
+                                    } else {
+                                      //検索結果が何もなかった場合に表示
+                                      alert('該当する結果がありませんでした：' + status);
+                                    }
+                                  });
+                                }
+                            </script>
+                            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDZc0kt_YOoE9NQucQ3rfwtMT58W4xullY&callback=initMap" async defer></script>
+
+                    <div class="d-flex justify-center flex-wrap">
+                        <div class="font-weight-bold"><i class="fa-solid fa-person-running text-danger"></i>避難場所：</div>
+                            <div><%= @post.name %></div>
                     </div>
-                <% end %>
-            </div>
-        </div>
+                    <div class="d-flex justify-center flex-wrap">
+                        <div class="font-weight-bold"><i class="fa-solid fa-house text-danger"></i>説明：</div>
+                            <div><%= render_with_tags(@post.introduction) %></div>
+                    </div>
+                     <div class="d-flex justify-center flex-wrap">
+                        <div class="font-weight-bold"><i class="fa-solid fa-house text-danger mr-2"></i>住所：</div>
+                            <div><%= @post.address %></div>
+                    </div>
+                    <div class="d-flex justify-center flex-wrap">
+                        <div class="font-weight-bold"><i class="fa-solid fa-calendar-days text-danger mr-2"></i>登録日：</div>
+                            <div><%= @post.created_at.strftime('%Y/%m/%d') %></div>
+                    </div>
+<!--いいね表示-->
+<div class="mt-2">
+    <% if @post.liked_by?(current_customer) %>
+        <p>  <!--いいね作成-->
+          <%= link_to public_post_likes_path(@post), method: :delete, class: 'text-danger' do %>
+            <i class="fa-solid fa-heart"></i><%= @post.likes.count %> いいね（ブックマーク）
+          <% end %>
+        </p>
+        <% else %>
+        <p>  <!--いいね削除-->
+          <%= link_to public_post_likes_path(@post), method: :post, class: 'text-dark' do %>
+            <i class="fa-regular fa-heart"></i><%= @post.likes.count %> いいね（ブックマーク）
+          <% end %>
+        </p>
     <% end %>
+</div>
+    
 
 <!--コメント投稿-->
     <div class="mt-2">
@@ -94,7 +101,57 @@
             <%= f.submit "投稿" %>
         <% end %>
     </div>
-        <%= link_to "前のページに戻る", public_posts_path, class: 'btn btn-info'  %>
+
+<!--コメント表示-->
+<i class="fa-regular fa-comments mt-2"></i><%= @post.comments.count %>コメント
+    <% @post.comments.where(reply_comment:nil).each do |comment| %>
+        <div style="width:55%" class="border-info border rounded m-1">
+            <div class="d-flex justify-center flex-wrap">
+                <p class="font-weight-bold mr-2">  <!--投稿者のIDと名前-->
+                    [<%= comment.customer.id %>]
+                    <%= comment.customer.last_name %><%= comment.customer.first_name %>
+                </p>
+                <div id="js-comment-<%= comment.id %>">  <!--投稿コメント-->
+                    <%= render "public/comments/js_comment", comment: comment %>
+                </div>
+             </div>
+                    <%= comment.created_at.strftime('%Y/%m/%d %H:%M') %>  <!--投稿日時-->
+
+            <!--ログインしている本人のみ操作できるようにするための分岐-->
+            <% if customer_signed_in? && (current_customer == comment.customer) %>
+                <!--コメント削除には、@post（親）, @commentsのc に渡す必要がある-->
+                <span data-comment-id=<%= comment.id %> class="js-edit-comment-button" >
+                    <i class="fa-solid fa-pen-to-square ml-2 text-success"></i> 編集
+                </span>
+
+                <%= link_to public_post_comment_path(@post, comment), method: :delete, "data-confirm" => "本当に削除しますか？", class: 'text-danger' do %>
+                    <i class="fa-solid fa-trash ml-2"></i> 削除
+                <% end %>
+            <% end %>
+        </div>
+
+<!--コメントへの返信を表示-->
+    -----返信コメント-----<br>
+    <% Comment.where(reply_comment: comment.id).each  do |reply_comment| %>
+        <%= reply_comment.comment %><br>
+    <% end %>
+
+<!--コメントに対して返信-->
+    <%= form_with model: [@post, @comment], url: public_post_comments_path(@post) do |f| %>
+        <div class="collapsible-body">
+            <%= f.text_field :comment %>
+            <!--ここ大事！hidden_fieldでフォーム無しに送信先コメントのidをreply_commentに追加-->
+            <%= f.hidden_field :reply_comment, :value => comment.id  %>
+            <%= button_tag type:"submit", class: "waves-effect waves-light btn" do %>
+                <%= f.submit "返信する" %>
+            <% end %>
+        </div>
+    <% end %>
+<% end %>
+
         </div>
     </div>
 </div>
+
+
+

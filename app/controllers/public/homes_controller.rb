@@ -1,4 +1,8 @@
 class Public::HomesController < ApplicationController
+  
+  def index
+    @homes = current_customer.homes
+  end
 
   def about
     @home = Home.new
@@ -6,12 +10,12 @@ class Public::HomesController < ApplicationController
 
   def create
       @home = Home.new(home_params)
+      @home.customer_id = current_customer.id
     if @home.save
-      flash[:notice]= "送信しました"
       redirect_to complete_path
     else
       @homes = Home.all
-      render :new
+      render "public/homes/about"
     end
   end
 

@@ -1,9 +1,14 @@
-<h2 class="font-weight-bold">本当に退会しますか？</h2>
-<h3>退会すると今まで保存したものや、<br>
-コメントしたものが見られなくなります。<br>
-復元をすることも不可能です。<br>
-よろしいですか？
-</h3>
-
-<%= link_to "マイページ", mypage_public_customers_path %>
-<%= link_to "退会手続きへ進む", unsubscribe_public_customers_path, method: :patch, "data-confirm" => "本当によろしいですか？" %>
+<div class="container mt-3">
+    <div class="text-center">
+        <h3 class="font-weight-bold">本当に退会しますか？退会すると元に戻すことはできません。</h3>
+            <h4>
+                退会するとあなたのプロフィール、保存した投稿、<br>
+                コメント、いいね（ブックマーク）も完全に削除されます。<br>
+            </h4>
+            
+        <div class="col-md-5 m-3 mx-auto">
+            <%= link_to "退会しない", mypage_public_customers_path, class: 'btn btn-success' %>
+            <%= link_to "退会手続きへ進む", unsubscribe_public_customers_path, method: :patch, class: 'btn btn-danger', "data-confirm" => "本当によろしいですか？" %>
+        </div>
+    </div>
+</div>

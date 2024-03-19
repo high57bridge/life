@@ -7,7 +7,7 @@ Rails.application.routes.draw do
     resources :posts,     only: [:show, :index, :edit, :new, :create, :update, :destroy] do
       resources :comments,  only: :destroy
     end
-    resources :customers, only: [:index, :show, :edit, :update, :destroy]
+    resources :customers, only: [:index, :show, :edit, :update]
     resources :donations, only: :index
   end
 
@@ -17,21 +17,22 @@ Rails.application.routes.draw do
 
   namespace :public do
     get "search" => "searches#search"
-    resources :homes,     only: :create
-    resources :posts,     only: [:new, :index, :show] do
-      resource  :favorites, only: [:create, :destroy]
+    resources :homes,       only: [:create, :index]
+    resources :posts,       only: [:index, :show, :new] do
+      resource  :likes, only: [:create, :destroy]
+      resources :notifications, only: :index
       resources :comments,  only: [:create, :update, :destroy]
-      resource  :bookmarks, only: [:create, :destroy]
-      resource  :tags,      only: [:create, :destroy]
+      resource  :tags,      only: :create
+      resources :maps,      only: [:index, :show]
     end
-    
+
     get '/tag/:name' => 'tags#tag', as: "hashtag"
 
-    resources :customers, only: :show
+    # resources :customers, only: :show
     resource :customers do
       get   :mypage, action: :show
       get   "information/edit", action: :edit
-      get   :withdrawal
+      get   :withdrawal, action: :withdrawal
       patch :information, action: :update
       patch :unsubscribe
     end

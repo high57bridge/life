@@ -1,13 +1,15 @@
-<h2>ログイン</h2>
+<div class="container mt-2">
+
+    <h3>ログイン</h3>
 
 <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
   <div class="field">
-    <%= f.label :メールアドレス %><br />
+    <%= f.label :email %><br />
     <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
   </div>
 
   <div class="field">
-    <%= f.label :パスワード %><br />
+    <%= f.label :password %><br />
     <%= f.password_field :password, autocomplete: "current-password" %>
   </div>
 
@@ -18,11 +20,13 @@
     </div>
   <% end %>
   
-  <%= link_to 'ゲストログイン（閲覧用）', customers_guest_sign_in_path, method: :post %>
+  <%= link_to 'ゲストログイン（閲覧用）', customers_guest_sign_in_path, method: :post, class: "text-success" %>
 
-  <div class="actions">
-    <%= f.submit "ログイン" %>
+  <div class="actions mt-2">
+    <%= f.submit "ログイン", class: "btn btn-primary" %>
   </div>
 <% end %>
+</div>
+</div>
 
 <%#= render "public/shared/links" %>

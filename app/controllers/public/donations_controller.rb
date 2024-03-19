@@ -1,4 +1,5 @@
 class Public::DonationsController < ApplicationController
+  before_action :authenticate_customer!
 
   def index
     @donations = current_customer.donations
@@ -20,7 +21,7 @@ class Public::DonationsController < ApplicationController
     else
       render :new
     end
-      
+
     # 下記のコードは金額のバックアップを残すためのもの
       @donation_details = DonationDetail.new
       @donation_details.payment_amount = @donation.payment_amount

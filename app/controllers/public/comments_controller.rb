@@ -1,5 +1,6 @@
 class Public::CommentsController < ApplicationController
-
+  before_action :authenticate_customer!
+  
   def update
     @comment = current_customer.comments.find(params[:id])
     @comment.reload unless @comment.update(comment_params)
@@ -28,10 +29,10 @@ class Public::CommentsController < ApplicationController
       render "public/posts/show"
     end
   end
-
+  
 private
 
   def comment_params
-    params.require(:comment).permit(:customer_id, :post_id, :comment)
+    params.require(:comment).permit(:customer_id, :post_id, :reply_comment, :comment)
   end
 end

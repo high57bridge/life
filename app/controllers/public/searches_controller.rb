@@ -1,8 +1,7 @@
 class Public::SearchesController < ApplicationController
+  before_action :authenticate_customer!
   
   def search
-    # @range = params[:range]
-    # @range == "Post"
     @posts = Post.looks(params[:search], params[:word])
   end
   

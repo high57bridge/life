@@ -1,8 +1,9 @@
 class Public::CustomersController < ApplicationController
+  before_action :authenticate_customer!
   
   def show
     @customer = current_customer
-    @bookmarks = Bookmark.where(customer_id: current_customer.id)
+    @likes = Like.where(customer_id: current_customer.id)
   end
 
   def edit
@@ -10,11 +11,10 @@ class Public::CustomersController < ApplicationController
   end
 
   def update
-       @customer = current_customer
+    @customer = current_customer
     if @customer.update(customer_params)
-      redirect_to information_public_customers_path
+      redirect_to mypage_public_customers_path
     else
-      @customer = current_customer
       render :edit
     end
   end
@@ -23,7 +23,7 @@ class Public::CustomersController < ApplicationController
     @customer = Customer.find(current_customer.id)
     @customer.update(is_active: false)
     reset_session
-    flash[:notice] = "退会しました"
+    flash[:notice] = "退会しました。ご利用ありがとうございました。"
     redirect_to root_path
   end
   
@@ -31,6 +31,6 @@ class Public::CustomersController < ApplicationController
   
   def customer_params
     params.require(:customer).permit(:last_name, :first_name, :last_name_kana, :first_name_kana,
-                                     :postal_code, :address, :email, :telephone_number)
+                                     :postal_code, :address, :email, :municipality_name, :telephone_number)
   end
 end

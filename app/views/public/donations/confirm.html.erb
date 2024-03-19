@@ -1,19 +1,19 @@
 <div class="container mt-2">
   <div class="row">
     <div class="col-md-8">
-      <h2>情報確認</h2>
+      <h3>情報確認</h3>
 
-        <table>
+        <table border="1" cellpadding="5" style="width:60%">
             <tr>
-              <th>支払方法 : </th>
-              <td><%= @donation.payment_method_i18n %></td>
+              <th class="table-secondary" style="width:20%">支払方法</th>
+              <td style="width:40%"><%= @donation.payment_method_i18n %></td>
             </tr>
             <tr>
-              <th>寄付場所 : </th>
+              <th class="table-secondary">寄付場所</th>
               <td><%= @donation.area %></td>
             </tr>
             <tr>
-              <th>寄付金額 : </th>
+              <th class="table-secondary">寄付金額</th>
               <td><%= @donation.payment_amount.to_s(:delimited) %>円</td>
             </tr>
         </table>
@@ -28,7 +28,7 @@
           <div class="container mt-5">
             <div class="row">
               <div class="mx-auto">
-                <%= f.submit "お支払いを確定する", "data-confirm" => "確定してよろしいですか？" %>
+                <%= f.submit "お支払いを確定する", class: 'btn btn-primary', "data-confirm" => "確定してよろしいですか？" %>
               </div>
             </div>
           </div>
