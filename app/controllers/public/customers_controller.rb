@@ -13,8 +13,10 @@ class Public::CustomersController < ApplicationController
   def update
     @customer = current_customer
     if @customer.update(customer_params)
+      flash[:notice] = "会員情報を更新しました"
       redirect_to mypage_public_customers_path
     else
+      flash.now[:alert] = "会員情報の更新に失敗しました"
       render :edit
     end
   end
@@ -23,7 +25,7 @@ class Public::CustomersController < ApplicationController
     @customer = Customer.find(current_customer.id)
     @customer.update(is_active: false)
     reset_session
-    flash[:notice] = "退会しました。ご利用ありがとうございました。"
+    flash[:notice] = "退会しました。ご利用ありがとうございました"
     redirect_to root_path
   end
   
