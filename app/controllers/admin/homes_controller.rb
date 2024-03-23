@@ -12,8 +12,9 @@ class Admin::HomesController < ApplicationController
   def update
        @home = Home.find(params[:id])
     if @home.update(home_params)
-       redirect_to top_path
+       redirect_to top_path, notice: "ステータスを更新しました"
     else
+      flash.now[:alert] = "ステータスの更新に失敗しました"
       render :show
     end
   end

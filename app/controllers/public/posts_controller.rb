@@ -34,10 +34,9 @@ class Public::PostsController < ApplicationController
     @post.image.attach(params[:post][:image])
     @post.customer_id = current_customer.id
     if @post.save
-       @post.save_posts(tag_list)
-       redirect_to public_post_tags_path
+      @post.save_posts(tag_list)
+      redirect_to public_post_tags_path
     else
-      flash.now[:alert] = '投稿に失敗しました'
       render :new
     end
   end
