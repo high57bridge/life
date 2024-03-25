@@ -8,8 +8,12 @@
       投稿をマイページに保存することができます。<br>
       詳細ページに行くと投稿にコメントすることも可能です。<br>
       <%= link_to "こちら", about_path, class: 'text-info' %>からご意見やご質問もお待ちしております。<br>
-      お気軽にお問い合わせフォームをご利用ください。
-      ※会員以外の方はゲストログインをしてから問い合わせをお願いします。
+      お気軽にお問い合わせフォームをご利用ください。<br>
+      <div class="font-weight-bold text-danger">
+        ※会員以外の方は、問い合わせをする前にゲストログインをしてください。<br>
+      </div>
+      <%= link_to "こちら", about_path, class: 'font-weight-bold text-info' %>から.
+      <br>
     </h3>
   </div>
 </div>
