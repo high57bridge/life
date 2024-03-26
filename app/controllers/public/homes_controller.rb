@@ -1,5 +1,5 @@
 class Public::HomesController < ApplicationController
-  before_action :authenticate_customer!
+  before_action :authenticate_customer!, except: [:top, :about]
   
   def index
     @homes = current_customer.homes
