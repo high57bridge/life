@@ -23,12 +23,11 @@ Rails.application.routes.draw do
       resources :notifications, only: :index
       resources :comments,  only: [:create, :update, :destroy]
       resource  :tags,      only: :create
-      resources :maps,      only: [:index, :show]
+      # resources :maps,      only: [:index, :show]
     end
 
     get '/tag/:name' => 'tags#tag', as: "hashtag"
 
-    # resources :customers, only: :show
     resource :customers do
       get   :mypage, action: :show
       get   "information/edit", action: :edit
