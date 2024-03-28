@@ -25,11 +25,7 @@ class Public::CustomersController < ApplicationController
     @customer = Customer.find(current_customer.id)
     @customer.update(is_active: false)
     reset_session
-<<<<<<< Updated upstream
     flash[:notice] = "退会しました。またのご利用お待ちしております。"
-=======
-    flash[:notice] = "退会しました。ご利用ありがとうございました"
->>>>>>> Stashed changes
     redirect_to root_path
   end
   

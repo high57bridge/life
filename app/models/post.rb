@@ -1,21 +1,21 @@
 class Post < ApplicationRecord
-  validates :name, presence: true
-  validates :introduction, presence: true
+  validates :name, presence: true, length: {minimum:2, maximum:50}
+  validates :introduction, presence: true, length: {minimum:2, maximum:200}
   validates :address, presence: true
-  
+
   has_many :comments, dependent: :destroy  # Post.comments で、その投稿のコメント取得
   has_many :replies, class_name: "Comment", foreign_key: :reply_comment, dependent: :destroy
-  
+
   has_many :likes, dependent: :destroy
   def liked_by?(customer)
     likes.exists?(customer_id: customer)
   end
-  
+
   has_many :reads, dependent: :destroy
-  
+
   has_many :hashtags, dependent: :destroy
   has_many :tags, through: :hashtags
-  
+
   after_create do
     post = Post.find_by(id: id)
     # hashbodyに打ち込まれたハッシュタグを検出
@@ -47,5 +47,5 @@ class Post < ApplicationRecord
       @post = Post.all
     end
   end
-  
+
 end

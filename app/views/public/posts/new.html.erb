@@ -5,6 +5,7 @@
     </div>
   </div>
 
+<!--既読・未読の判断をわかりやすくするためのもの-->
   <% @posts.each do |post| %>
     <div style="width:35%" class="border-secondary border rounded m-1">
       <% read = post.reads.where(customer_id:current_customer.id).present? %>
