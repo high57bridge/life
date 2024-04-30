@@ -58,7 +58,7 @@
                                   });
                                 }
                             </script>
-                            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDZc0kt_YOoE9NQucQ3rfwtMT58W4xullY&callback=initMap" async defer></script>
+                            <script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV["GOOGLE_API_KEY"] %>&callback=initMap" async defer></script>
 
                     <div class="d-flex justify-center flex-wrap">
                         <div class="font-weight-bold"><i class="fa-solid fa-person-running text-danger"></i>避難場所：</div>
