@@ -20,14 +20,14 @@ class Public::SessionsController < Devise::SessionsController
 
   def new_guest
     customer = Customer.find_or_create_by!(email: 'guest@example.com') do |customer|
-      customer.password = SecureRandom.urlsafe_base64
+      customer.encrypted_password = "abcd1234"
       customer.last_name = "guest"
       customer.first_name = "guest"
       customer.last_name_kana = "guest"
       customer.first_name_kana = "guest"
-      customer.postal_code = "guest"
+      customer.postal_code = "3331234"
       customer.address = "guest"
-      customer.telephone_number = "guest"
+      customer.telephone_number = "07012341234"
       customer.municipality_name = "guest"
       # customer.confirmed_at = Time.now  # Confirmable を使用している場合は必要
     end
@@ -41,7 +41,7 @@ class Public::SessionsController < Devise::SessionsController
       format.any(*navigational_formats) { redirect_to after_sign_out_path_for(resource_name), status: :see_other }
     end
   end
-  
+
   def after_sign_in_path_for(resource)
     if resource.is_active
       flash[:notice] = "ログインしました"
