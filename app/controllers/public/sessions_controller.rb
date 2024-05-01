@@ -20,7 +20,7 @@ class Public::SessionsController < Devise::SessionsController
 
   def new_guest
     customer = Customer.find_or_create_by!(email: 'guest@example.com') do |customer|
-      customer.encrypted_password = "abcd1234"
+      customer.password = "abcd1234"
       customer.last_name = "guest"
       customer.first_name = "guest"
       customer.last_name_kana = "guest"
