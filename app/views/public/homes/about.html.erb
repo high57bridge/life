@@ -1,5 +1,4 @@
 <div class="container mt-2">
-  <div class="text-center">
     <h1>LIFEについて</h1>
     <h3>
       LIFEは各自治体が発信している災害時の避難情報や<br>
@@ -18,10 +17,10 @@
         <% end %>
       </ul>
       <% end %>
-      <div class="row">
-      <div class="col-md-12">
+  <div class="row">
+    <div class="col-md-12">
     <%= form_with model: @home, url: public_homes_path do |f| %>
-    <table class="table mx-auto mt-5" style="width:70%">
+    <table class="table mt-5" style="width:70%">
       <tr>
         <th><%= f.label :氏名 %></th>
         <td><%= f.text_field :name, autofocus: true %></td>
@@ -39,7 +38,6 @@
     </table>
     <%= f.submit "送信", class: "btn btn-primary" %>
     <% end %>
-    </div>
     </div>
   </div>
 </div>

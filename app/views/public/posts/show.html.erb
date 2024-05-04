@@ -65,8 +65,8 @@
                             <div><%= @post.name %></div>
                     </div>
                     <div class="d-flex justify-center flex-wrap">
-                        <div class="font-weight-bold"><i class="fa-solid fa-house text-danger"></i>説明：</div>
-                            <div><%= render_with_tags(@post.introduction) %></div>
+                        <div class="font-weight-bold"><i class="fa-solid fa-book-open text-danger"></i>説明：</div>
+                            <div><%= render_with_tags(simple_format(@post.introduction,sanitize: true)) %></div>
                     </div>
                      <div class="d-flex justify-center flex-wrap">
                         <div class="font-weight-bold"><i class="fa-solid fa-house text-danger mr-2"></i>住所：</div>
