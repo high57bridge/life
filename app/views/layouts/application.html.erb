@@ -25,17 +25,17 @@
                 
                   <% if customer_signed_in? %>
 
-                  <%= link_to "マイページ", mypage_public_customers_path, class: 'nav-link text-dark' %>
+                  <%= link_to "マイページ", mypage_customers_path, class: 'nav-link text-dark' %>
 
-                  <%= link_to "投稿一覧", public_posts_path, class: 'nav-link text-dark' %>
+                  <%= link_to "投稿一覧", posts_path, class: 'nav-link text-dark' %>
 
-                  <%= link_to "募金ページ", information_public_donations_path, class: 'nav-link text-dark' %>
+                  <%= link_to "募金ページ", information_donations_path, class: 'nav-link text-dark' %>
 
                   <%= link_to "ログアウト", destroy_customer_session_path, method: :delete, class: 'nav-link text-dark' %>
 
                   <% if customer_signed_in? %>
                     <div class="search_form">
-                      <%= form_with url: public_search_path, local: true, method: :get do |f| %>
+                      <%= form_with url: search_path, local: true, method: :get do |f| %>
                         <%= f.text_field :word %>
                         <%= f.select :range, ['Post'] %>
                         <%= f.select :search, options_for_select([["完全一致","perfect_match"], ["部分一致","partial_match"]]) %>
@@ -61,7 +61,7 @@
 
                   <%= link_to "LIFEについて", about_path, class: 'nav-link text-dark'%>
 
-                  <%= link_to "投稿一覧", public_posts_path, class: 'nav-link text-dark' %>
+                  <%= link_to "投稿一覧", posts_path, class: 'nav-link text-dark' %>
 
                   <%= link_to "新規登録", new_customer_registration_path, class: 'nav-link text-dark' %>
 

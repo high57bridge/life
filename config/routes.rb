@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   get "/about"    => "public/homes#about",    as: "about"
   get "/complete" => "public/homes#complete", as: "complete"
 
-  namespace :public do
+  scope module: :public do
     get "search" => "searches#search"
     resources :homes,       only: [:create, :index]
     resources :posts,       only: [:index, :show, :new] do

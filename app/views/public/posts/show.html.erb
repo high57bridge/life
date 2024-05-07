@@ -80,13 +80,13 @@
 <div class="mt-2">
     <% if @post.liked_by?(current_customer) %>
         <p>  <!--いいね作成-->
-          <%= link_to public_post_likes_path(@post), method: :delete, class: 'text-danger' do %>
+          <%= link_to post_likes_path(@post), method: :delete, class: 'text-danger' do %>
             <i class="fa-solid fa-heart"></i><%= @post.likes.count %> いいね（ブックマーク）
           <% end %>
         </p>
         <% else %>
         <p>  <!--いいね削除-->
-          <%= link_to public_post_likes_path(@post), method: :post, class: 'text-dark' do %>
+          <%= link_to post_likes_path(@post), method: :post, class: 'text-dark' do %>
             <i class="fa-regular fa-heart"></i><%= @post.likes.count %> いいね（ブックマーク）
           <% end %>
         </p>
@@ -96,7 +96,7 @@
 
 <!--コメント投稿-->
     <div class="mt-2">
-        <%= form_with model: [@post, @comment], url: public_post_comments_path(@post) do |f| %>  <!--comment は、postに紐づくので、配列で書く-->
+        <%= form_with model: [@post, @comment], url: post_comments_path(@post) do |f| %>  <!--comment は、postに紐づくので、配列で書く-->
             <%= f.text_area :comment, size: "30x3" %>
             <%= f.submit "投稿" %>
         <% end %>
@@ -112,7 +112,7 @@
                     <%= comment.customer.last_name %><%= comment.customer.first_name %>
                 </p>
                 <div id="js-comment-<%= comment.id %>">  <!--投稿コメント-->
-                    <%= render "public/comments/js_comment", comment: comment %>
+                    <%= render "comments/js_comment", comment: comment %>
                 </div>
              </div>
                     <%= comment.created_at.strftime('%Y/%m/%d %H:%M') %>  <!--投稿日時-->
@@ -124,7 +124,7 @@
                     <i class="fa-solid fa-pen-to-square ml-2 text-success"></i> 編集
                 </span>
 
-                <%= link_to public_post_comment_path(@post, comment), method: :delete, "data-confirm" => "本当に削除しますか？", class: 'text-danger' do %>
+                <%= link_to post_comment_path(@post, comment), method: :delete, "data-confirm" => "本当に削除しますか？", class: 'text-danger' do %>
                     <i class="fa-solid fa-trash ml-2"></i> 削除
                 <% end %>
             <% end %>
@@ -138,7 +138,7 @@
     <% end %>
 
 <!--コメントに対して返信-->
-    <%= form_with model: [@post, @comment], url: public_post_comments_path(@post) do |f| %>
+    <%= form_with model: [@post, @comment], url: post_comments_path(@post) do |f| %>
         <div class="collapsible-body">
             <%= f.text_field :comment %>
             <!--ここ大事！hidden_fieldでフォーム無しに送信先コメントのidをreply_commentに追加-->

@@ -3,9 +3,9 @@
     <div class="col-md-12">
       <div class="d-flex justify-center flex-wrap">
         <h3 class="mr-5">マイページ</h3>
-        <%= link_to "編集する", information_edit_public_customers_path, class: 'btn btn-success mb-2' %>
-        <%= link_to "寄付履歴", public_donations_path, class: 'btn btn-info mb-2 ml-2' %>
-        <%= link_to "問い合わせ履歴", public_homes_path, class: 'btn btn-primary mb-2 ml-2' %>
+        <%= link_to "編集する", information_edit_customers_path, class: 'btn btn-success mb-2' %>
+        <%= link_to "寄付履歴", donations_path, class: 'btn btn-info mb-2 ml-2' %>
+        <%= link_to "問い合わせ履歴", homes_path, class: 'btn btn-primary mb-2 ml-2' %>
       </div>
 
         <table border="1" cellpadding="5" style="width:50%">
@@ -68,7 +68,7 @@
               <% @likes.each do |like| %>
                 <tr>
                   <td>
-                    <%= link_to public_post_path(like.post), class: 'text-info' do %>
+                    <%= link_to post_path(like.post), class: 'text-info' do %>
                       <%= like.post.name %>
                     <% end %>
                   </td>
