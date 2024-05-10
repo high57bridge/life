@@ -12,7 +12,7 @@
         </ul>
       <% end %>
       
-      <%= form_with(model: @customer, url: information_public_customers_path, method: :patch) do |f| %>
+      <%= form_with(model: @customer, url: information_customers_path, method: :patch) do |f| %>
         <table style="width:70%" >
           <tr>
             <th class="table-secondary"><%= f.label :氏名 %></th>
@@ -57,7 +57,7 @@
         </table>
         <div class="col-md-5 mt-2">
           <%= f.submit "変更を保存", class: 'btn btn-success' %>
-          <%= link_to "退会する", withdrawal_public_customers_path, class: 'btn btn-danger' %>
+          <%= link_to "退会する", withdrawal_customers_path, class: 'btn btn-danger' %>
         </div>
       <% end %>
     </div>

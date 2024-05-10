@@ -35,7 +35,7 @@ class Public::PostsController < ApplicationController
     @post.customer_id = current_customer.id
     if @post.save
       @post.save_posts(tag_list)
-      redirect_to public_post_tags_path
+      redirect_to post_tags_path
     else
       render :new
     end

@@ -17,7 +17,7 @@ class Public::DonationsController < ApplicationController
        @donation = Donation.new(donation_params)
        @donation.customer_id = current_customer.id
     if @donation.save
-       redirect_to complete_public_donations_path
+       redirect_to complete_donations_path
     else
       render :new
     end
@@ -34,7 +34,7 @@ class Public::DonationsController < ApplicationController
   def update
        @donation = Donation(params[:id])
     if @donation.update(donation_params)
-       redirect_to public_donations_path
+       redirect_to donations_path
     else
       render :index
     end

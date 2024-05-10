@@ -18,9 +18,9 @@
             </tr>
         </table>
 
-        <p>※内容を変更されたい方は<%= link_to "こちら", new_public_donation_path %></p>
+        <p>※内容を変更されたい方は<%= link_to "こちら", new_donation_path %></p>
 
-        <%= form_with model: @donation, url: public_donations_path, method: :post do |f| %>
+        <%= form_with model: @donation, url: donations_path, method: :post do |f| %>
           <%= f.hidden_field :payment_method %>
           <%= f.hidden_field :area %>
           <%= f.hidden_field :payment_amount %>

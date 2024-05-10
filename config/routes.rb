@@ -26,7 +26,7 @@ Rails.application.routes.draw do
       # resources :maps,      only: [:index, :show]
     end
 
-    get '/tag/:name' => 'tags#tag', as: "hashtag"
+    get 'public/tag/:name' => 'tags#tag', as: "hashtag"
 
     resource :customers do
       get   :mypage, action: :show

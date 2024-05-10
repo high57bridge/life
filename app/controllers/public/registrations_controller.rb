@@ -5,7 +5,7 @@ class Public::RegistrationsController < Devise::RegistrationsController
   
   def after_sign_in_path_for(resource)
     flash[:notice] = "新規登録しました"
-    mypage_public_customers_path
+    mypage_customers_path
   end
   # before_action :configure_account_update_params, only: [:update]
   

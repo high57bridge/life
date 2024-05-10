@@ -61,11 +61,11 @@
                             <script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV["GOOGLE_API_KEY"] %>&callback=initMap" async defer></script>
 
                     <div class="d-flex justify-center flex-wrap">
-                        <div class="font-weight-bold"><i class="fa-solid fa-person-running text-danger"></i>避難場所：</div>
+                        <div class="font-weight-bold"><i class="fa-solid fa-person-running text-danger"></i> 避難場所：</div>
                             <div><%= @post.name %></div>
                     </div>
                     <div class="d-flex justify-center flex-wrap">
-                        <div class="font-weight-bold"><i class="fa-solid fa-book-open text-danger"></i>説明：</div>
+                        <div class="font-weight-bold"><i class="fa-solid fa-book-open text-danger"></i> 説明：</div>
                             <div><%= render_with_tags(simple_format(@post.introduction,sanitize: true)) %></div>
                     </div>
                      <div class="d-flex justify-center flex-wrap">
@@ -112,7 +112,7 @@
                     <%= comment.customer.last_name %><%= comment.customer.first_name %>
                 </p>
                 <div id="js-comment-<%= comment.id %>">  <!--投稿コメント-->
-                    <%= render "comments/js_comment", comment: comment %>
+                    <%= render "public/comments/js_comment", comment: comment %>
                 </div>
              </div>
                     <%= comment.created_at.strftime('%Y/%m/%d %H:%M') %>  <!--投稿日時-->

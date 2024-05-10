@@ -5,7 +5,7 @@
         <% @posts.each do |post| %>
         <div style="width:30%" class="border-info border rounded m-1 text-center">
           <div>
-            <%= link_to public_post_path(post.id), class: 'text-info' do %>
+            <%= link_to post_path(post.id), class: 'text-info' do %>
               <%= post.name %><br>
             <% end %>
               <%= post.address %><br>
