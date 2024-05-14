@@ -23,7 +23,6 @@ Rails.application.routes.draw do
       resources :notifications, only: :index
       resources :comments,  only: [:create, :update, :destroy]
       resource  :tags,      only: :create
-      # resources :maps,      only: [:index, :show]
     end
 
     get 'public/tag/:name' => 'tags#tag', as: "hashtag"
