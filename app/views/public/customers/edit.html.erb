@@ -2,7 +2,9 @@
   <div class="row">
     <div class="col-md-12">
       <h3>会員情報の変更</h3>
-      
+      <h6>セキュリティ上の理由から<br>
+      情報を変更した後は再度ログインが必要です。</h6>
+
       <% if @customer.errors.any? %>
         <%= @customer.errors.count %>件のエラーが発生しました
         <ul>
@@ -11,7 +13,7 @@
           <% end %>
         </ul>
       <% end %>
-      
+
       <%= form_with(model: @customer, url: information_customers_path, method: :patch) do |f| %>
         <table style="width:70%" >
           <tr>
@@ -21,7 +23,7 @@
               <%= f.text_field :first_name, autofocus: true, id:"inputName" %>
             </td>
           </tr>
-          
+
           <tr>
             <th><%= f.label :フリガナ %></th>
             <td>
@@ -29,32 +31,39 @@
               <%= f.text_field :first_name_kana, autofocus: true, id:"inputName" %>
             </td>
           </tr>
-          
+
           <tr>
             <th class="table-secondary"><%= f.label :郵便番号 %></th>
             <td><%= f.text_field :postal_code, autofocus: true %></td>
           </tr>
-          
+
           <tr>
             <th><%= f.label :住所 %></th>
             <td><%= f.text_field :address, autofocus: true, size: "30x5" %></td>
           </tr>
-          
+
           <tr>
             <th class="table-secondary"><%= f.label :電話番号 %></th>
             <td><%= f.text_field :telephone_number, autofocus: true %></td>
           </tr>
-          
+
           <tr>
             <th><%= f.label :メールアドレス %></th>
             <td><%= f.text_field :email, autofocus: true, autocomplete: "email" %></td>
           </tr>
-          
+
           <tr>
             <th class="table-secondary"><%= f.label :自治体 %></th>
             <td><%= f.text_field :municipality_name, autofocus: true %></td>
           </tr>
+          
+        <%= f.hidden_field :password, value: @customer.encrypted_password %>
+          <tr>
+            <th><%= f.label :password, "現在のパスワード" %></th>
+            <td><%= f.password_field :password %></td>
+          </tr>
         </table>
+
         <div class="col-md-5 mt-2">
           <%= f.submit "変更を保存", class: 'btn btn-success' %>
           <%= link_to "退会する", withdrawal_customers_path, class: 'btn btn-danger' %>
