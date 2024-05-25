@@ -16,17 +16,17 @@
                   <%= f.label :first_name %><br>
                   <%= f.text_field :first_name, autofocus: true, placeholder:"必須" %>
                 </div>
-              
+
                 <div class="field">
                   <%= f.label :last_name_kana %><br>
                   <%= f.text_field :last_name_kana, autofocus: true, placeholder:"必須" %>
                 </div>
-              
+
                 <div class="field">
                   <%= f.label :first_name_kana %><br>
                   <%= f.text_field :first_name_kana, autofocus: true, placeholder:"必須" %>
                 </div>
-              
+
                 <div class="field">
                   <%= f.label :postal_code %><br>
                   <%= f.text_field :postal_code, autofocus: true, placeholder:"必須" %>
@@ -43,7 +43,7 @@
                   <%= f.label :telephone_number %><br>
                   <%= f.text_field :telephone_number, autofocus: true, placeholder:"必須" %>
                 </div>
-              
+
                 <div class="field">
                   <%= f.label :municipality_name %><br>
                   <%= f.text_field :municipality_name, autofocus: true, placeholder:"必須" %>
@@ -53,7 +53,7 @@
                   <%= f.label :email %><br />
                   <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder:"必須" %>
                 </div>
-              
+
                 <div class="field">
                   <%= f.label :password %>
                   <% if @minimum_password_length %>
@@ -61,7 +61,7 @@
                   <% end %><br />
                   <%= f.password_field :password, autocomplete: "new-password", placeholder:"必須" %>
                 </div>
-              
+
                 <div class="field">
                   <%= f.label :password_confirmation %><br />
                   <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder:"必須" %>
