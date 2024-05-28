@@ -3,6 +3,8 @@ class Public::PostsController < ApplicationController
 
   def index
        @posts = Post.page(params[:page]).per(5)   # ぺージネーション機能で5つずつ投稿を表示するため
+       @posts_data = Post.fetch_data
+       render json: @posts_data
        @tag_lists = Tag.all
        @total_post = Post.count   # 何件投稿されているか確認するため
     if params[:search].present?   #検索フォームに入力があった場合
