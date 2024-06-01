@@ -35,22 +35,4 @@ production:
   username: <%= ENV['DB_USERNAME'] %>
   password: <%= ENV['DB_PASSWORD'] %>
   
-  default: &default
-  adapter: mysql2
-  encoding: utf8
-  pool: 5
-  username: <%= ENV.fetch['DB_USERNAME'] %>
-  password: <%= ENV.fetch['DB_PASSWORD'] %>
-  host: <%= ENV.fetch['DB_HOST' %>
-
-development:
-  <<: *default
-  database: your_database_name_development
-
-test:
-  <<: *default
-  database: your_database_name_test
-
-production:
-  <<: *default
-  database: your_database_name_production
+  

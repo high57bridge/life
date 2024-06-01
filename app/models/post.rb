@@ -49,8 +49,4 @@ class Post < ApplicationRecord
     end
   end
 
-
- self.fetch_data
-    select(:classNo, :class, :text, :name, :status, :lat, :lng, :img)
-
 end
