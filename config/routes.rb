@@ -17,7 +17,8 @@ Rails.application.routes.draw do
 
   scope module: :public do
     get "search" => "searches#search"
-    resources :homes,       only: [:create, :index, :list]
+    get "list" => "lists#list"
+    resources :homes,       only: [:create, :index]
     resources :posts,       only: [:index, :show, :new] do
       resource  :likes, only: [:create, :destroy]
       resources :notifications, only: :index
