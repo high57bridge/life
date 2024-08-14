@@ -14,10 +14,10 @@ Rails.application.routes.draw do
   root to: 'public/homes#top'
   get "/about"    => "public/homes#about",    as: "about"
   get "/complete" => "public/homes#complete", as: "complete"
+  get "/list" => "public/homes#list", as: "list"
 
   scope module: :public do
     get "search" => "searches#search"
-    get "list" => "lists#list"
     resources :homes,       only: [:create, :index]
     resources :posts,       only: [:index, :show, :new] do
       resource  :likes, only: [:create, :destroy]
@@ -58,4 +58,3 @@ devise_scope :customer do
 end
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
-
